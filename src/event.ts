@@ -1,5 +1,5 @@
 import { Timestamp } from "firebase/firestore";
-import { MoneyType } from "./money";
+import { type MoneyType } from "./money";
 
 export type Event = {
   id: string;
