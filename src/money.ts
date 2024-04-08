@@ -1,13 +1,15 @@
 export enum CurrencyCode {
-    USD = "USD",
-    SuperCoins = "SSC"
-  }
+  USD = "USD",
+  SuperCoins = "SSC"
+}
+
+export type MoneyType = { currency: string; amount: number }
 
 export class Money {
     public currency: string
     public amount: number
   
-    constructor(opts: { currency: string; amount: number }) {
+    constructor(opts: MoneyType) {
       this.currency = opts.currency
       this.amount = opts.amount
     }
