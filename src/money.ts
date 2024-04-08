@@ -1,0 +1,54 @@
+export enum CurrencyCode {
+    USD = "USD",
+    SuperCoins = "SSC"
+  }
+
+export class Money {
+    public currency: string
+    public amount: number
+  
+    constructor(opts: { currency: string; amount: number }) {
+      this.currency = opts.currency
+      this.amount = opts.amount
+    }
+  
+    public format(opts?: { round?: "floor" }): string {
+      if (this.currency === CurrencyCode.SuperCoins) {
+        return this.amount.toString()
+      }
+  
+      const round = opts?.round
+  
+      const formatter = Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: this.currency,
+        minimumFractionDigits: round === "floor" ? 0 : 2
+      })
+  
+      if (round === "floor") {
+        return formatter.format(Math.floor(this.amount / 100))
+      }
+  
+      return formatter.format(this.amount / 100)
+    }
+  
+    public isReal(): boolean {
+      return !this.isVirtual()
+    }
+  
+    public isVirtual(): boolean {
+      return this.currency === CurrencyCode.SuperCoins
+    }
+  
+    public static USD(amount: number): Money {
+      return new Money({ currency: CurrencyCode.USD, amount })
+    }
+  
+    public static SuperCoins(amount: number): Money {
+      return new Money({ currency: CurrencyCode.SuperCoins, amount })
+    }
+  
+    public static Zero(): Money {
+      return Money.USD(0)
+    }
+  }
