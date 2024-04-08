@@ -4,6 +4,7 @@ export type Event = {
     id: string;
     gameName: string;
     subtitle: string;
+    type: "free" | "paid";
     state: EventState;
     startsAt: Timestamp;
     streams: [
@@ -20,8 +21,17 @@ export type Event = {
       logoUrl: string;
     };
     segments?: QuestionSegment[];
-    pool: {
-      virtual: number;
+    cashPool: {
+      remaining: {
+        currency: string;
+        amount: number;
+      };
+      total: {
+        currency: string;
+        amount: number;
+      };
+    };
+    coinPool: {
       remaining: {
         currency: string;
         amount: number;
