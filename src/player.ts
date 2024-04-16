@@ -6,6 +6,7 @@ export type RapidTimers = Record<string, Timestamp>;
 
 export type Player = {
   id: string;
+  playerId: string;
   username: string;
   pictureUrl: string;
   currentStep: number;

@@ -8,33 +8,37 @@ export type Event = {
   type: "free" | "paid";
   state: EventState;
   startsAt: Timestamp;
-  streams: [
-    {
-      url: string;
-    }
-  ];
-  team1: {
-    name: string;
-    logoUrl: string;
-  };
-  team2: {
-    name: string;
-    logoUrl: string;
-  };
+  streams: QuizEventStream[];
+  team1: QuizEventTeam;
+  team2: QuizEventTeam;
   segments?: QuestionSegment[];
-  pool: {
-    cash: {
-      remaining: MoneyType;
-      total: MoneyType;
-    };
-    coins: {
-      remaining: MoneyType;
-      total: MoneyType;
-    };
-  };
-};
 
+  pool: {
+    cash: Pool;
+    coins: Pool;
+  };
+
+  chaser: string;
+  isOver?: boolean;
+
+  managementFee: number;
+};
 export type Platform = "twitch" | "youtube" | null;
+
+export interface QuizEventStream {
+  platform: Platform;
+  url: string;
+}
+
+export interface Pool {
+  remaining: MoneyType;
+  total: MoneyType;
+}
+
+export interface QuizEventTeam {
+  name: string;
+  logoUrl: string;
+}
 
 export enum EventState {
   Pending = "pending",
@@ -69,4 +73,9 @@ export type Question = {
   };
   options: string[];
   answers: string[];
+
+  isRapid: boolean;
+  state: string;
+  stepMultiplier: number;
+  coinMultiplier: number;
 };
