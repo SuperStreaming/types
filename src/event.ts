@@ -11,7 +11,7 @@ export type Event = {
   streams: QuizEventStream[];
   team1: QuizEventTeam;
   team2: QuizEventTeam;
-  segments: Array<QuestionSegment | ShoppingSegment>;
+  segments: Segment[];
 
   pool: {
     cash: Pool;
@@ -24,6 +24,9 @@ export type Event = {
   managementFee: number;
 };
 export type Platform = "twitch" | "youtube" | null;
+
+
+export type Segment = { type: "question" } & QuestionSegment | { type: "shopping" } & ShoppingSegment
 
 export interface QuizEventStream {
   platform: Platform;
@@ -47,7 +50,6 @@ export enum EventState {
 }
 
 export type QuestionSegment = {
-  type: "question";
   name: string;
   state: SegmentState;
   activeUntil?: Timestamp;
@@ -55,7 +57,6 @@ export type QuestionSegment = {
 };
 
 export type ShoppingSegment = {
-  type: "shopping";
   state: SegmentState;
 };
 
