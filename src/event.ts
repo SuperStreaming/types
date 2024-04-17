@@ -26,7 +26,13 @@ export type Event = {
 export type Platform = "twitch" | "youtube" | null;
 
 
-export type Segment = { type: "question" } & QuestionSegment | { type: "shopping" } & ShoppingSegment
+export type Segment = {
+  type: "question" | "shopping";
+  name: string;
+  state: SegmentState;
+  activeUntil?: Timestamp;
+  questions?: Question[];
+};
 
 export interface QuizEventStream {
   platform: Platform;
@@ -48,17 +54,6 @@ export enum EventState {
   Live = "live",
   Ended = "ended",
 }
-
-export type QuestionSegment = {
-  name: string;
-  state: SegmentState;
-  activeUntil?: Timestamp;
-  questions?: Question[];
-};
-
-export type ShoppingSegment = {
-  state: SegmentState;
-};
 
 export enum SegmentState {
   Incomplete = "incomplete",
