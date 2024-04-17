@@ -56,6 +56,7 @@ export type QuestionSegment = {
 
 export type ShoppingSegment = {
   type: "shopping";
+  state: SegmentState;
 };
 
 export enum SegmentState {
