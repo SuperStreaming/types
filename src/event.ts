@@ -12,6 +12,7 @@ export type Event = {
   team1: QuizEventTeam;
   team2: QuizEventTeam;
   segments: Segment[];
+  shopifyCollection?: string;
 
   pool: {
     cash: Pool;
