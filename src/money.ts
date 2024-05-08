@@ -1,5 +1,6 @@
 export enum CurrencyCode {
   USD = "USD",
+  EUR = "EUR",
   SuperCoins = "SSC"
 }
 
@@ -44,6 +45,10 @@ export class Money {
   
     public static USD(amount: number): Money {
       return new Money({ currency: CurrencyCode.USD, amount })
+    }
+
+    public static EUR(amount: number): Money {
+      return new Money({ currency: CurrencyCode.EUR, amount })
     }
   
     public static SuperCoins(amount: number): Money {
