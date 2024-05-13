@@ -1,4 +1,4 @@
-export type IframeTranactionProps = {
+export type IframeTransactionProps = {
   client: {
     firstName: string;
     lastName: string;
