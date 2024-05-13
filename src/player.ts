@@ -12,6 +12,7 @@ export type Player = {
   currentStep: number;
   answers: Answers;
   rapid?: RapidTimers;
+  isOnHotStreak: boolean;
   isCaught: boolean;
   isChaser: boolean;
   ticket?: {
