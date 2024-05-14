@@ -15,7 +15,7 @@ export type Player = {
   isOnHotStreak: boolean;
   isCaught: boolean;
   isChaser: boolean;
-  ticket?: {
+  ticket: {
     purchasedAt: Timestamp;
     type: "virtual" | "real";
     price: {
