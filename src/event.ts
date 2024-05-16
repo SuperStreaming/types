@@ -3,7 +3,7 @@ import { type MoneyType } from "./money";
 
 export enum QuizEventCategory {
   All = "All",
-  CASH_POOL = "Cash Pool",
+  CashPool = "Cash Pool",
   Esports = "Esports",
   Sports = "Sports",
   Movies = "Movies",
