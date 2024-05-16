@@ -1,11 +1,21 @@
 import { Timestamp } from "firebase/firestore";
 import { type MoneyType } from "./money";
 
+export enum QuizEventCategory {
+  All = "All",
+  CASH_POOL = "Cash Pool",
+  Esports = "Esports",
+  Sports = "Sports",
+  Movies = "Movies",
+  Shows = "Shows"
+}
+
 export type Event = {
   id: string;
   gameName: string;
   subtitle: string;
   type: "free" | "paid";
+  category?: QuizEventCategory;
   state: EventState;
   startsAt: Timestamp;
   streams: QuizEventStream[];
