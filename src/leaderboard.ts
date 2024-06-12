@@ -3,6 +3,7 @@ import { Timestamp } from "firebase/firestore";
 export type LeaderboardState = "open" | "closed"
 
 export type LeaderboardPlayerScore = {
+  leaderboardId?: string
   userId: string
   username: string
   pictureUrl: string
