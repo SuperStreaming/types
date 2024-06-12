@@ -36,14 +36,16 @@ export type Event = {
 };
 export type Platform = "twitch" | "youtube" | null;
 
+export type SegmentTypes = 'question' | 'shopping' | 'auction';
 
 export type Segment = {
-  type: "question" | "shopping";
-  name: string;
+  type: SegmentTypes;
   state: SegmentState;
+  name: string;
   activeUntil?: Timestamp;
   questions?: Question[];
-};
+  auctionIds: number[];
+}
 
 export interface QuizEventStream {
   platform: Platform;
