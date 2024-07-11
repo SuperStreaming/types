@@ -55,10 +55,21 @@ export type Auction = {
 
 export type AuctionContainer = {
   auction: Auction
-  bid_rule: any[]
+  bid_rule: BidRule[]
   cust_date: string
-  booking_product: any
+  booking_product: unknown
   buyUrl: string
   imgUrl: string
   bid?: BidData
+}
+
+type AutoAuctionDef = {
+  auctionId: number
+  secondsDuration: number
+}
+
+export type AutoAuctionsDef = {
+  defaultSecondsDuration: number
+  secondsDelayBetween: number
+  auctions: AutoAuctionDef[]
 }
