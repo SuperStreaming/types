@@ -55,7 +55,7 @@ export type Auction = {
 
 export type AuctionContainer = {
   auction: Auction
-  bid_rule: BidRule[]
+  bid_rule?: BidRule[]
   cust_date: string
   booking_product: unknown
   buyUrl: string

@@ -21,7 +21,7 @@ export type Event = {
   startsAt: Timestamp
   streams: QuizEventStream[]
   team1: QuizEventTeam
-  team2: QuizEventTeam
+  team2?: QuizEventTeam
   segments: Segment[]
   shopifyCollection?: string
 
@@ -59,8 +59,8 @@ export interface Pool {
 }
 
 export interface QuizEventTeam {
-  name: string
-  logoUrl: string
+  name?: string
+  logoUrl?: string
 }
 
 export enum EventState {
