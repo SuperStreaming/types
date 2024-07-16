@@ -1,4 +1,4 @@
-import { Timestamp } from "firebase/firestore";
+import { Timestamp } from "firebase/firestore"
 
 export type LeaderboardState = "open" | "closed"
 
@@ -23,7 +23,7 @@ export type LeaderboardBracket = {
 export type Leaderboard = {
   id: string
   state: "open" | "closed"
-  eventIds: Array<string>
+  eventIds?: Array<string>
   definition: {
     name: string
     breakdown: Array<LeaderboardBracket>
