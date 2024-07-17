@@ -62,6 +62,7 @@ export type AuctionContainer = {
   imgUrl: string
   bid?: BidData
   s2status?: "pre-open" | "open"
+  groups?: string[]
 }
 
 type AutoAuctionDef = {
