@@ -61,7 +61,6 @@ export type AuctionContainer = {
   buyUrl: string
   imgUrl: string
   bid?: BidData
-  s2status?: "pre-open" | "open"
   groups?: string[]
 }
 
