@@ -39,7 +39,7 @@ export type Auction = {
   booking_amount: string
   buy_now_price: string
   display_auction_days: number
-  auction_status: string
+  auction_status: "Pending" | "Running" | "Finished"
   reserve_price: string
   start_price: string
   proxy_bidding_on: number
@@ -65,7 +65,7 @@ export type AuctionContainer = {
   groups?: string[]
 }
 
-type AutoAuctionDef = {
+export type AutoAuctionDef = {
   auctionId: number
   secondsDuration: number
 }
