@@ -4,7 +4,7 @@ export type PlaceBidProps = {
   picUrl: string
   username: string
   curBidId?: number
-  auctionGroup: string
+  auctionGroup?: string
 }
 
 export type BidData = {
@@ -14,6 +14,7 @@ export type BidData = {
   quantity: number
   public: number
   proxy_bid: number
+  id?: number
   uid?: string
   username?: string
   picUrl?: string
