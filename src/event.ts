@@ -1,6 +1,8 @@
 import { Timestamp } from "firebase/firestore"
 import { type MoneyType } from "./money"
 
+export const NONE_PLAYER = "None"
+
 export enum QuizEventCategory {
   All = "All",
   Auction = "Auction",
