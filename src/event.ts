@@ -3,6 +3,26 @@ import { type MoneyType } from "./money"
 
 export const NONE_PLAYER = "None"
 
+export enum EventState {
+  Undisplayed = "undisplayed",
+  Pending = "pending",
+  Live = "live",
+  Settled = "settled",
+  Ended = "ended"
+}
+
+export enum SegmentState {
+  Incomplete = "incomplete",
+  Active = "active",
+  Closed = "closed",
+  Settled = "settled"
+}
+
+export enum QuestionState {
+  Unsettled = "unsettled",
+  Settled = "settled"
+}
+
 export enum QuizEventCategory {
   All = "All",
   Auction = "Auction",
@@ -66,19 +86,6 @@ export interface QuizEventTeam {
   logoUrl?: string
 }
 
-export enum EventState {
-  Pending = "pending",
-  Live = "live",
-  Ended = "ended"
-}
-
-export enum SegmentState {
-  Incomplete = "incomplete",
-  Active = "active",
-  Closed = "closed",
-  Settled = "settled"
-}
-
 export type Question = {
   id: string
   text: string
@@ -94,7 +101,7 @@ export type Question = {
   answers: string[]
 
   isRapid: boolean
-  state: string
+  state: QuestionState
   stepMultiplier: number
   coinMultiplier: number
 }
