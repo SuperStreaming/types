@@ -102,6 +102,6 @@ export type Question = {
 
   isRapid: boolean
   state: QuestionState
-  stepMultiplier: number
-  coinMultiplier: number
+  // stepMultiplier: number
+  // coinMultiplier: number
 }
