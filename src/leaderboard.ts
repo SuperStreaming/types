@@ -1,6 +1,9 @@
 import { Timestamp } from "firebase/firestore"
 
-export type LeaderboardState = "open" | "closed"
+export enum LeaderboardState {
+  Open = "open",
+  Closed = "closed"
+}
 
 export type LeaderboardPlayerScore = {
   leaderboardId?: string
@@ -22,7 +25,7 @@ export type LeaderboardBracket = {
 
 export type Leaderboard = {
   id: string
-  state: "open" | "closed"
+  state: LeaderboardState
   eventIds?: Array<string>
   definition: {
     name: string
