@@ -18,6 +18,7 @@ export type BidData = {
   uid?: string
   username?: string
   picUrl?: string
+  auctionEndDate?: string
 }
 
 export type BidRule = {
@@ -64,7 +65,6 @@ export type AuctionContainer = {
   booking_product: unknown
   buyUrl: string
   imgUrl: string
-  bid?: BidData
   groups?: string[]
 }
 
