@@ -66,6 +66,7 @@ export type AuctionContainer = {
   buyUrl: string
   imgUrl: string
   groups?: string[]
+  winningBid?: BidData
 }
 
 export type AutoAuctionDef = {
