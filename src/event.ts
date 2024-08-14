@@ -26,7 +26,7 @@ export enum QuestionState {
 export enum QuizEventCategory {
   All = "All",
   Auction = "Auction",
-  CashPool = "Cash Pool",
+  Shopping = "Shopping",
   Esports = "Esports",
   Sports = "Sports",
   Movies = "Movies",
