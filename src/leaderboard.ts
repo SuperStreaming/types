@@ -14,12 +14,14 @@ export type LeaderboardPlayerScore = {
   gamesPlayed: number
 }
 
+export type LeaderboardPrize = {
+  name: string
+  pictureUrl: string
+}
+
 export type LeaderboardBracket = {
   name: string
-  prizes: Array<{
-    name: string
-    pictureUrl: string
-  }>
+  prizes: LeaderboardPrize[]
   position: number
 }
 
@@ -30,6 +32,7 @@ export type Leaderboard = {
   definition: {
     name: string
     breakdown: Array<LeaderboardBracket>
+    participationPrizes: LeaderboardPrize[]
   }
   lastUpdated: Timestamp
   entries: Array<LeaderboardPlayerScore>
