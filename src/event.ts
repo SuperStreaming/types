@@ -48,6 +48,9 @@ export type Event = {
   segments: Segment[]
   shopifyCollection?: string
 
+  whitelistIds?: string[]
+  blacklistIds?: string[]
+
   pool: {
     cash: Pool
     coins: Pool
