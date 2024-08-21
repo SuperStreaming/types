@@ -50,6 +50,7 @@ export type Event = {
 
   whitelistIds?: string[]
   blacklistIds?: string[]
+  blockFromListing?: boolean
 
   pool: {
     cash: Pool
@@ -61,6 +62,7 @@ export type Event = {
 
   managementFee: number
 }
+
 export type Platform = "twitch" | "youtube" | null
 
 export type SegmentTypes = "question" | "shopping" | "auction"
