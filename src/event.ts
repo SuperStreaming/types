@@ -1,5 +1,6 @@
 import { Timestamp } from "firebase/firestore"
 import { type MoneyType } from "./money"
+import { LeaderboardPrizeDef } from "./prizes"
 
 export const NONE_PLAYER = "None"
 
@@ -63,6 +64,8 @@ export type Event = {
   isOver?: boolean
 
   managementFee: number
+
+  prizes?: LeaderboardPrizeDef
 }
 
 export type Platform = "twitch" | "youtube" | null

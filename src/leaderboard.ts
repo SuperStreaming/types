@@ -1,4 +1,5 @@
 import { Timestamp } from "firebase/firestore"
+import { LeaderboardPrizeDef } from "./prizes"
 
 export enum LeaderboardState {
   Open = "open",
@@ -14,25 +15,12 @@ export type LeaderboardPlayerScore = {
   gamesPlayed: number
 }
 
-export type LeaderboardPrize = {
-  name: string
-  pictureUrl: string
-}
-
-export type LeaderboardBracket = {
-  name: string
-  prizes: LeaderboardPrize[]
-  position: number
-}
-
 export type Leaderboard = {
   id: string
   state: LeaderboardState
   eventIds?: Array<string>
-  definition: {
+  definition: LeaderboardPrizeDef & {
     name: string
-    breakdown: Array<LeaderboardBracket>
-    participationPrizes: LeaderboardPrize[]
   }
   lastUpdated: Timestamp
   entries: Array<LeaderboardPlayerScore>
