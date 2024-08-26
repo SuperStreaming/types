@@ -57,6 +57,8 @@ export type Event = {
     coins: Pool
   }
 
+  numPlayers: number
+
   chaser: string
   isOver?: boolean
 
