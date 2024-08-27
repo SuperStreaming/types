@@ -59,6 +59,7 @@ export type Event = {
   }
 
   numPlayers: number
+  currentHighestStep: number
 
   chaser: string
   isOver?: boolean
