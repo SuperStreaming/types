@@ -13,6 +13,7 @@ export type Player = {
   currentStep: number
   answers: Answers
   answerTimes: { [key: string]: Timestamp }
+  reactionTime: number
   rapid?: RapidTimers
   isOnHotStreak: boolean
   isCaught: boolean
