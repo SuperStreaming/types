@@ -11,16 +11,24 @@ export type LeaderboardPlayerScore = {
   userId: string
   username: string
   pictureUrl: string
-  coinsEarned: number
   gamesPlayed: number
 }
 
+export type LeaderboardGamesCoinsScore = LeaderboardPlayerScore & {
+  coinsEarned: number
+}
+
+export type LeaderboardAnswersReactionScore = LeaderboardPlayerScore & {
+  correctAnswers: number
+  reactionTime: number
+}
+
 export type Leaderboard = {
-  id: string
   state: LeaderboardState
   eventIds?: Array<string>
   definition: LeaderboardPrizeDef & {
     name: string
+    type: "coinsGames" | "answersReaction"
   }
   lastUpdated: Timestamp
   entries: Array<LeaderboardPlayerScore>
