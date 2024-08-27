@@ -6,6 +6,11 @@ export enum LeaderboardState {
   Closed = "closed"
 }
 
+export enum LeaderboardType {
+  coinsGames = "Coins and Games",
+  answersReaction = "Answers and Reaction Time"
+}
+
 export type LeaderboardPlayerScore = {
   leaderboardId?: string
   userId: string
@@ -28,7 +33,7 @@ export type Leaderboard = {
   eventIds?: Array<string>
   definition: LeaderboardPrizeDef & {
     name: string
-    type: "coinsGames" | "answersReaction"
+    type: LeaderboardType
   }
   lastUpdated: Timestamp
   entries: Array<LeaderboardPlayerScore>
