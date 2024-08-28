@@ -47,6 +47,7 @@ export type Event = {
   team1: QuizEventTeam
   team2?: QuizEventTeam
   segments: Segment[]
+  settleTimes: Record<string, Timestamp>
   shopifyCollection?: string
 
   whitelistIds?: string[]
@@ -60,6 +61,7 @@ export type Event = {
 
   numPlayers: number
   currentHighestStep: number
+  steps: Record<number, number>
 
   chaser: string
   isOver?: boolean

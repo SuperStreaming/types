@@ -17,6 +17,7 @@ export type LeaderboardPlayerScore = {
   username: string
   pictureUrl: string
   gamesPlayed: number
+  orderBy: number
 }
 
 export type LeaderboardGamesCoinsScore = LeaderboardPlayerScore & {
