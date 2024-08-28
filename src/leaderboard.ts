@@ -30,6 +30,7 @@ export type LeaderboardAnswersReactionScore = LeaderboardPlayerScore & {
 }
 
 export type Leaderboard = {
+  id: string
   state: LeaderboardState
   eventIds?: Array<string>
   definition: LeaderboardPrizeDef & {
