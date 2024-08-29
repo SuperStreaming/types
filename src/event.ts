@@ -1,6 +1,6 @@
 import { Timestamp } from "firebase/firestore"
 import { type MoneyType } from "./money"
-import { LeaderboardPrizeDef } from "./prizes"
+import { type LeaderboardPrizeDef } from "./prizes"
 
 export const NONE_PLAYER = "None"
 

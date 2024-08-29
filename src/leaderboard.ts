@@ -1,5 +1,5 @@
 import { Timestamp } from "firebase/firestore"
-import { LeaderboardPrizeDef } from "./prizes"
+import { type LeaderboardPrizeDef } from "./prizes"
 
 export enum LeaderboardState {
   Open = "open",
