@@ -47,7 +47,7 @@ export type Event = {
   team1: QuizEventTeam
   team2?: QuizEventTeam
   segments: Segment[]
-  settleTimes: Record<string, Timestamp>
+  settleTimes: Record<string, number>
   shopifyCollection?: string
 
   whitelistIds?: string[]
