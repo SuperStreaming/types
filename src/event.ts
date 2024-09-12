@@ -20,7 +20,10 @@ export enum SegmentState {
 }
 
 export enum QuestionState {
-  Unsettled = "unsettled",
+  Undisplayed = "undisplayed",
+  Upcoming = "upcoming",
+  Active = "active",
+  Closed = "closed",
   Settled = "settled"
 }
 
@@ -46,6 +49,7 @@ export type Event = {
   streams: QuizEventStream[]
   team1: QuizEventTeam
   team2?: QuizEventTeam
+  questions?: Question[]
   segments: Segment[]
   settleTimes: Record<string, number>
   shopifyCollection?: string
