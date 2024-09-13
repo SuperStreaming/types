@@ -119,6 +119,8 @@ export type Question = {
 
   isRapid: boolean
   state: QuestionState
+  activeUntil?: Timestamp
+  group?: string
   // stepMultiplier: number
   // coinMultiplier: number
 }
