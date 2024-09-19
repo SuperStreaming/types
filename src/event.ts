@@ -76,8 +76,11 @@ export type Event = {
   prizes?: LeaderboardPrizeDef
 
   shopifyDiscountPerc?: number
-  affiliateUrl?: string
-  affiliateImgUrl?: string
+  affiliate?: {
+    url: string
+    imageUrl: string
+    description: string
+  }
 }
 
 export type Platform = "twitch" | "youtube" | null
