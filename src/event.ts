@@ -1,6 +1,5 @@
 import { Timestamp } from "firebase/firestore"
 import { type MoneyType } from "./money"
-import { type LeaderboardPrizeDef } from "./prizes"
 
 export const NONE_PLAYER = "None"
 
@@ -23,8 +22,9 @@ export enum QuestionState {
   Undisplayed = "undisplayed",
   Upcoming = "upcoming",
   Active = "active",
-  Closed = "closed",
-  Settled = "settled"
+  Suspended = "suspended",
+  Settled = "settled",
+  Closed = "closed"
 }
 
 export enum QuizEventCategory {
@@ -36,6 +36,10 @@ export enum QuizEventCategory {
   Sports = "Sports",
   Movies = "Movies",
   Shows = "Shows"
+}
+
+export enum StreamEventObjectType {
+  Question = "question"
 }
 
 export type Event = {
@@ -50,7 +54,10 @@ export type Event = {
   streams: QuizEventStream[]
   team1: QuizEventTeam
   team2?: QuizEventTeam
+
   questions?: Question[]
+  objects?: Question[]
+
   segments: Segment[]
   settleTimes: Record<string, number>
   shopifyCollection?: string
@@ -73,7 +80,7 @@ export type Event = {
 
   managementFee: number
 
-  prizes?: LeaderboardPrizeDef
+  closeSettledSeconds: number
 
   shopifyDiscountPerc?: number
   affiliate?: {
@@ -111,10 +118,17 @@ export interface QuizEventTeam {
   logoUrl?: string
 }
 
-export type Question = {
+export interface QuizEventObject {
+  objectType: StreamEventObjectType
+}
+
+export interface Question extends QuizEventObject {
   id: string
   text: string
+  objectType: StreamEventObjectType.Question
+
   type: "trivia" | "predict" | "recall"
+
   rapid?: {
     seconds: number
   }
