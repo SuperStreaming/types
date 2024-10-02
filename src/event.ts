@@ -94,6 +94,8 @@ export type Platform = "twitch" | "youtube" | null
 
 export type SegmentTypes = "question" | "shopping" | "auction"
 
+export type QuestionType = "trivia" | "predict" | "recall"
+
 export type Segment = {
   type: SegmentTypes
   state: SegmentState
@@ -127,7 +129,7 @@ export interface Question extends QuizEventObject {
   text: string
   objectType: StreamEventObjectType.Question
 
-  type: "trivia" | "predict" | "recall"
+  type: QuestionType
 
   rapid?: {
     seconds: number
@@ -139,7 +141,7 @@ export interface Question extends QuizEventObject {
   options: string[]
   answers: string[]
 
-  isRapid: boolean
+  isRapid?: boolean
   state: QuestionState
   activeUntil?: Timestamp
   group?: string
