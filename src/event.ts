@@ -90,6 +90,16 @@ export type Event = {
   }
 }
 
+export function getAllQuestions(event: Event) {
+  return [
+    ...(event.questions || []),
+    ...(event.segments || []).flatMap((x) => x.questions || []),
+    ...(event.objects || []).filter(
+      (x) => x.objectType === StreamEventObjectType.Question
+    )
+  ]
+}
+
 export type Platform = "twitch" | "youtube" | null
 
 export type SegmentTypes = "question" | "shopping" | "auction"
