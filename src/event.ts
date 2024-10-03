@@ -48,9 +48,11 @@ export type Event = {
   subtitle: string
   type: "free" | "paid"
   category?: QuizEventCategory
+  subCategory?: string
   autoauctionGroup?: string
   state: EventState
   startsAt: Timestamp
+  imageUrl?: string
   streams: QuizEventStream[]
   team1: QuizEventTeam
   team2?: QuizEventTeam
