@@ -35,9 +35,12 @@ export type Leaderboard = {
   eventIds?: Array<string>
   definition: LeaderboardPrizeDef & {
     name: string
+    category: string
     type: LeaderboardType
+    endDate?: Timestamp
     forSingleEvent: boolean
   }
+  numPlayers: number
   lastUpdated: Timestamp
   entries: Array<LeaderboardPlayerScore>
 }
