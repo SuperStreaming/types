@@ -39,8 +39,23 @@ export enum QuizEventCategory {
 }
 
 export enum StreamEventObjectType {
-  Question = "question"
+  Question = "question",
+  Shopping = "shopping",
+  AutoShopping = "autoShopping",
+  Auction = "auction"
 }
+
+export type Platform = "twitch" | "youtube" | null
+
+export type SegmentTypes = "question" | "shopping" | "auction"
+
+export type QuestionType = "trivia" | "predict" | "recall"
+
+export type StreamEventObject =
+  | Question
+  | ShoppingCard
+  | AutoShoppingCard
+  | AuctionCard
 
 export type Event = {
   id: string
@@ -58,7 +73,7 @@ export type Event = {
   team2?: QuizEventTeam
 
   questions?: Question[]
-  objects?: Question[]
+  objects?: StreamEventObject[]
 
   segments: Segment[]
   settleTimes: Record<string, number>
@@ -102,12 +117,6 @@ export function getAllQuestions(event: Event) {
   ]
 }
 
-export type Platform = "twitch" | "youtube" | null
-
-export type SegmentTypes = "question" | "shopping" | "auction"
-
-export type QuestionType = "trivia" | "predict" | "recall"
-
 export type Segment = {
   type: SegmentTypes
   state: SegmentState
@@ -132,12 +141,12 @@ export interface QuizEventTeam {
   logoUrl?: string
 }
 
-export interface QuizEventObject {
+export interface StreamEventCard {
+  id: string
   objectType: StreamEventObjectType
 }
 
-export interface Question extends QuizEventObject {
-  id: string
+export interface Question extends StreamEventCard {
   text: string
   objectType: StreamEventObjectType.Question
 
@@ -159,4 +168,17 @@ export interface Question extends QuizEventObject {
   group?: string
   // stepMultiplier: number
   // coinMultiplier: number
+}
+
+export interface ShoppingCard extends StreamEventCard {
+  shopifyCollectionId: string
+}
+
+export interface AutoShoppingCard extends ShoppingCard {
+  showXItems: number
+  rotateEvery: number
+}
+
+export interface AuctionCard extends StreamEventCard {
+  auctionId: number
 }
