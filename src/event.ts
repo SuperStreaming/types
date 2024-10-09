@@ -111,9 +111,9 @@ export function getAllQuestions(event: Event) {
   return [
     ...(event.questions || []),
     ...(event.segments || []).flatMap((x) => x.questions || []),
-    ...(event.objects || []).filter(
+    ...((event.objects || []).filter(
       (x) => x.objectType === StreamEventObjectType.Question
-    )
+    ) as Question[])
   ]
 }
 
