@@ -40,9 +40,9 @@ export enum QuizEventCategory {
 
 export enum StreamEventObjectType {
   Question = "question",
-  Shopping = "shopping",
-  ShoppingProduct = "shoppingProduct",
   AutoShopping = "autoShopping",
+  Shopping = "shopping",
+  ShopifyProduct = "shopifyProduct",
   Auction = "auction"
 }
 
@@ -186,7 +186,7 @@ export interface ShoppingCard extends StreamEventCard {
 }
 
 export interface ShoppingProductCard extends ShoppingCard {
-  productId: string
+  shopifyProductId: string
 }
 
 export interface AutoShoppingCard extends ShoppingCard {
