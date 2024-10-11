@@ -41,6 +41,7 @@ export enum QuizEventCategory {
 export enum StreamEventObjectType {
   Question = "question",
   Shopping = "shopping",
+  ShoppingProduct = "shoppingProduct",
   AutoShopping = "autoShopping",
   Auction = "auction"
 }
@@ -54,6 +55,7 @@ export type QuestionType = "trivia" | "predict" | "recall"
 export type StreamEventObject =
   | Question
   | ShoppingCard
+  | ShoppingProductCard
   | AutoShoppingCard
   | AuctionCard
 
@@ -64,7 +66,6 @@ export type Event = {
   type: "free" | "paid"
   category?: QuizEventCategory
   subCategory?: string
-  autoauctionGroup?: string
   state: EventState
   startsAt: Timestamp
   imageUrl?: string
@@ -77,7 +78,17 @@ export type Event = {
 
   segments: Segment[]
   settleTimes: Record<string, number>
+
+  shopifyStore?: {
+    domain: string
+    publicToken: string
+  }
+
   shopifyCollection?: string
+  shopifyCollections?: string[]
+
+  autoauctionGroup?: string
+  autoauctionGroups?: string[]
 
   whitelistIds?: string[]
   blacklistIds?: string[]
@@ -172,6 +183,10 @@ export interface Question extends StreamEventCard {
 
 export interface ShoppingCard extends StreamEventCard {
   shopifyCollectionId: string
+}
+
+export interface ShoppingProductCard extends ShoppingCard {
+  productId: string
 }
 
 export interface AutoShoppingCard extends ShoppingCard {
