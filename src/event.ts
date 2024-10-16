@@ -155,6 +155,8 @@ export interface QuizEventTeam {
 export interface StreamEventCard {
   id: string
   objectType: StreamEventObjectType
+  undisplayed: boolean
+  active: boolean
 }
 
 export interface Question extends StreamEventCard {
