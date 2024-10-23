@@ -61,6 +61,7 @@ export type StreamEventObject =
 
 export type Event = {
   id: string
+  urlFriendlyId: string
   gameName: string
   subtitle: string
   type: "free" | "paid"
@@ -88,7 +89,8 @@ export type Event = {
   shopifyCollections?: string[]
 
   autoauctionGroup?: string
-  autoauctionGroups?: string[]
+
+  autoshoppingGroup?: string
 
   whitelistIds?: string[]
   blacklistIds?: string[]
