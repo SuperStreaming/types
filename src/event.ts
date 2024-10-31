@@ -62,8 +62,11 @@ export type StreamEventObject =
 export type Event = {
   id: string
   urlFriendlyId: string
+
+  brand: string
   gameName: string
   subtitle: string
+
   type: "free" | "paid"
   category?: QuizEventCategory
   subCategory?: string
