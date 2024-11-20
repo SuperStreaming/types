@@ -81,7 +81,7 @@ export type StreamEventObject =
   | AutoShoppingCard
   | AuctionCard
 
-export type Event = {
+export type StreamEvent = {
   id: string
   urlFriendlyId: string
 
@@ -145,7 +145,9 @@ export type Event = {
   }
 }
 
-export function getAllQuestions(event: Event) {
+export type Event = StreamEvent
+
+export function getAllQuestions(event: StreamEvent) {
   return [
     ...(event.questions || []),
     ...(event.segments || []).flatMap((x) => x.questions || []),
