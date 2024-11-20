@@ -27,6 +27,28 @@ export enum QuestionState {
   Closed = "closed"
 }
 
+export function getNextQuestionState(state: QuestionState) {
+  switch (state) {
+    case QuestionState.Undisplayed:
+      return QuestionState.Upcoming
+
+    case QuestionState.Upcoming:
+      return QuestionState.Active
+
+    case QuestionState.Active:
+      return QuestionState.Suspended
+
+    case QuestionState.Suspended:
+      return QuestionState.Settled
+
+    case QuestionState.Settled:
+      return QuestionState.Closed
+
+    case QuestionState.Closed:
+      return QuestionState.Closed
+  }
+}
+
 export enum QuizEventCategory {
   All = "All",
   Affiliate = "Affiliate",
