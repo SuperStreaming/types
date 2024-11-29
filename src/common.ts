@@ -1,11 +1,14 @@
 import { Timestamp } from "firebase/firestore"
 
-type Dateish = Date | Timestamp | null | undefined
+type Dateish = Date | Timestamp | undefined
 
-export function timestampToDate(dateish: Dateish) {
+export function datestampToDate(dateish: Dateish) {
   return dateish instanceof Date ? dateish : dateish?.toDate()
 }
 
+// deprecated in favor of datestampToDate
+export const timestampToDate = datestampToDate
+
 export function ensureDate(date: Dateish) {
-  return timestampToDate(date) || new Date()
+  return datestampToDate(date) || new Date()
 }

@@ -33,8 +33,9 @@ export enum AuctionStartOption {
 export type Auction = {
   title: string
   imgUrl: string
+  variantId: number
 
-  duration: number
+  duration?: number
   createdAt: Datestamp
   updatedAt: Datestamp
 
@@ -51,7 +52,6 @@ export type Auction = {
   popcornRule?: { withinSeconds: number; extendBySeconds: number }
 
   winnerLockedMinutes?: number
-  containerRef?: string
 
   bid?: Bid
 
