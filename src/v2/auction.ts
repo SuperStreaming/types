@@ -58,3 +58,16 @@ export type Auction = {
 
   group: string
 }
+
+export enum AuctionError {
+  NotStarted = 101,
+
+  InsufficientBid = 201,
+
+  ServerError = 500,
+
+  NotRunning = 901,
+  Ended = 902
+}
+
+export type AuctionErrorResp = [AuctionError, string] | undefined
