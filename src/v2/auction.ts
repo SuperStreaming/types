@@ -34,6 +34,7 @@ export type Auction = {
   title: string
   imgUrl: string
   variantId: number
+  shopId: string
 
   duration?: number
   createdAt: Datestamp
