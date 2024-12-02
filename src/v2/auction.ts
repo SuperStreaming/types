@@ -19,15 +19,15 @@ export type Bid = {
 }
 
 export enum AuctionStatus {
-  Upcoming,
-  Running,
-  Finished
+  Upcoming = "Upcoming",
+  Running = "Running",
+  Finished = "Finished"
 }
 
 export enum AuctionStartOption {
-  Scheduled,
-  Manual,
-  OnBid
+  Scheduled = "Scheduled",
+  Manual = "Manual",
+  OnBid = "OnBid"
 }
 
 export type Auction = {

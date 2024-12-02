@@ -1,4 +1,5 @@
 import { Timestamp } from "firebase/firestore"
+
 import { type MoneyType } from "./money"
 
 export const NONE_PLAYER = "None"
@@ -65,7 +66,9 @@ export enum StreamEventObjectType {
   AutoShopping = "autoShopping",
   Shopping = "shopping",
   ShopifyProduct = "shopifyProduct",
-  Auction = "auction"
+  Auction = "auction",
+
+  AuctionV2 = "auctionV2"
 }
 
 export type Platform = "twitch" | "youtube" | null
@@ -116,6 +119,12 @@ export type StreamEvent = {
   autoauctionGroup?: string
 
   autoshoppingGroup?: string
+
+  auctionDefaults?: {
+    duration: number
+    popcornRule?: { withinSeconds: number; extendBySeconds: number }
+    bidRules: { rangeMin: number; rangeMax?: number; bump: number }[]
+  }
 
   whitelistIds?: string[]
   blacklistIds?: string[]
