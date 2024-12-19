@@ -1,4 +1,5 @@
-import { Timestamp } from "firebase/firestore"
+import { Timestamp } from "firebase/firestore/lite"
+
 import { type MoneyType } from "./money"
 
 export type Answers = Record<string, string>

@@ -1,4 +1,4 @@
-import { Timestamp } from "firebase/firestore"
+import { Timestamp } from "firebase/firestore/lite"
 
 // All frontend dates are stored as timestamps on firestore
 export type Datestamp = Date | Timestamp

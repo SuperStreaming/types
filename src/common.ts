@@ -1,4 +1,4 @@
-import { Timestamp } from "firebase/firestore"
+import { Timestamp } from "firebase/firestore/lite"
 
 type Dateish = Date | Timestamp | undefined
 
