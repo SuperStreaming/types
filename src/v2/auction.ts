@@ -60,6 +60,8 @@ export type Auction = {
   group: string
 }
 
+export type AuctionWithId = Auction & { id: string }
+
 export enum AuctionError {
   NotStarted = 101,
 

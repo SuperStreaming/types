@@ -83,6 +83,7 @@ export type StreamEventObject =
   | ShoppingProductCard
   | AutoShoppingCard
   | AuctionCard
+  | AuctionV2Card
 
 export type StreamEvent = {
   id: string
@@ -236,4 +237,8 @@ export interface AutoShoppingCard extends ShoppingCard {
 
 export interface AuctionCard extends StreamEventCard {
   auctionId: number
+}
+
+export interface AuctionV2Card extends StreamEventCard {
+  auctionId: string
 }
