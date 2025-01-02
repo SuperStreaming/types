@@ -31,11 +31,14 @@ export enum AuctionStartOption {
 }
 
 export type Auction = {
-  title: string
-  imgUrl: string
-  productId: number | string
   shopId: string
   appId: string
+
+  title: string
+  imgUrl: string
+
+  productId: number | string
+  variantId: number | string
 
   duration?: number
   createdAt: Datestamp
