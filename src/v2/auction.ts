@@ -39,7 +39,9 @@ export type Auction = {
 
   productId: number | string
   variantId: number | string
+
   orderNumber?: number
+  orderName?: string
 
   duration?: number
   createdAt: Datestamp
