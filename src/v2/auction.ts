@@ -61,6 +61,7 @@ export type Auction = {
 
   winnerLockedMinutes?: number
 
+  highestBid?: Bid
   bid?: Bid
 
   group: string
