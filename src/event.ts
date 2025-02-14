@@ -90,8 +90,11 @@ export type StreamEvent = {
   urlFriendlyId: string
 
   brand: string
+  brandImgUrl?: string
+
   gameName: string
   subtitle: string
+  featured: boolean
 
   type: "free" | "paid"
   category?: QuizEventCategory
