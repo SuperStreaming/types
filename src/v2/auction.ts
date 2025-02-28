@@ -16,6 +16,7 @@ export type Bid = {
   picUrl: string
   username: string
   time: Datestamp
+  auctionId: string
 }
 
 export enum AuctionStatus {
@@ -33,12 +34,14 @@ export enum AuctionStartOption {
 export type Auction = {
   shopId: string
   appId: string
+  shopName: string
 
   title: string
   imgUrl: string
 
   productId: number | string
   variantId: number | string
+  currency: string
 
   orderNumber?: number
   orderName?: string
@@ -65,6 +68,8 @@ export type Auction = {
   bid?: Bid
 
   group: string
+
+  reminderEmailsSent?: number
 }
 
 export type AuctionWithId = Auction & { id: string }
