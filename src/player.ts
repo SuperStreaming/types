@@ -12,6 +12,7 @@ export type Player = {
   username: string
   pictureUrl: string
   currentStep: number
+  correctAnswers: number
   answers: Answers
   answerTimes: { [key: string]: Timestamp }
   reactionTime: number
