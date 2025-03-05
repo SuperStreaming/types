@@ -226,22 +226,27 @@ export interface Question extends StreamEventCard {
 }
 
 export interface ShoppingCard extends StreamEventCard {
+  objectType: StreamEventObjectType.Shopping
   shopifyCollectionId: string
 }
 
-export interface ShoppingProductCard extends ShoppingCard {
+export interface ShoppingProductCard extends StreamEventCard {
+  objectType: StreamEventObjectType.ShopifyProduct
   shopifyProductId: string
 }
 
-export interface AutoShoppingCard extends ShoppingCard {
+export interface AutoShoppingCard extends StreamEventCard {
+  objectType: StreamEventObjectType.AutoShopping
   showXItems: number
   rotateEvery: number
 }
 
 export interface AuctionCard extends StreamEventCard {
+  objectType: StreamEventObjectType.Auction
   auctionId: number
 }
 
 export interface AuctionV2Card extends StreamEventCard {
+  objectType: StreamEventObjectType.AuctionV2
   auctionId: string
 }
