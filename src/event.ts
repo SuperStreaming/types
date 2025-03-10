@@ -237,6 +237,7 @@ export interface ShoppingProductCard extends StreamEventCard {
 
 export interface AutoShoppingCard extends StreamEventCard {
   objectType: StreamEventObjectType.AutoShopping
+  shopifyCollectionId: string
   showXItems: number
   rotateEvery: number
 }
