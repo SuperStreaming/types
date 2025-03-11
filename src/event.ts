@@ -67,7 +67,7 @@ export enum StreamEventObjectType {
   Shopping = "shopping",
   ShopifyProduct = "shopifyProduct",
   Auction = "auction",
-
+  Advertisement = "advertisement",
   AuctionV2 = "auctionV2"
 }
 
@@ -82,6 +82,7 @@ export type StreamEventObject =
   | ShoppingCard
   | ShoppingProductCard
   | AutoShoppingCard
+  | AdCard
   | AuctionCard
   | AuctionV2Card
 
@@ -233,6 +234,7 @@ export interface ShoppingCard extends StreamEventCard {
 export interface ShoppingProductCard extends StreamEventCard {
   objectType: StreamEventObjectType.ShopifyProduct
   shopifyProductId: string
+  hijackUrl?: string
 }
 
 export interface AutoShoppingCard extends StreamEventCard {
@@ -240,6 +242,14 @@ export interface AutoShoppingCard extends StreamEventCard {
   shopifyCollectionId: string
   showXItems: number
   rotateEvery: number
+}
+
+export interface AdCard extends StreamEventCard {
+  objectType: StreamEventObjectType.Advertisement
+  imgUrl: string
+  title: string
+  btnText: string
+  btnUrl: string
 }
 
 export interface AuctionCard extends StreamEventCard {
