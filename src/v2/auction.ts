@@ -86,3 +86,56 @@ export enum AuctionError {
 }
 
 export type AuctionErrorResp = [AuctionError, string] | undefined
+
+export function isAuctionOpen(auction: AuctionWithId) {
+  return (
+    auction.status === AuctionStatus.Running ||
+    (auction.startOption === AuctionStartOption.OnBid &&
+      auction.status === AuctionStatus.Upcoming)
+  )
+}
+
+export function auctionSorter(
+  auctions: AuctionWithId[],
+  eventAuctionIds: string[],
+  uid?: string
+) {
+  uid = uid || "notauserid"
+
+  return auctions.sort((a, b) => {
+    const aHasWon = uid == a.bid?.uid,
+      bHasWon = uid === b.bid?.uid
+
+    if (aHasWon !== !bHasWon) {
+      if (aHasWon) {
+        return -1 // a first
+      }
+      if (bHasWon) {
+        return 1 // b first
+      }
+    }
+
+    const aOpen = isAuctionOpen(a),
+      bOpen = isAuctionOpen(b),
+      aFinished = a.status === AuctionStatus.Finished,
+      bFinished = b.status === AuctionStatus.Finished
+
+    if (aOpen !== bOpen || aFinished !== bFinished) {
+      if (aOpen || bFinished) {
+        return -1 // a first
+      }
+      if (bOpen || aFinished) {
+        return 1 // b first
+      }
+    }
+
+    const aIndex = eventAuctionIds.indexOf(a.id)
+    const bIndex = eventAuctionIds.indexOf(b.id)
+
+    if (aIndex === bIndex) {
+      return a.id.localeCompare(b.id)
+    }
+
+    return aIndex - bIndex
+  })
+}
