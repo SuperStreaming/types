@@ -70,6 +70,8 @@ export type Auction = {
   group: string
 
   reminderEmailsSent?: number
+
+  noMoreBids?: boolean
 }
 
 export type AuctionWithId = Auction & { id: string }
