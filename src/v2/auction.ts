@@ -97,18 +97,22 @@ export function isAuctionOpen(auction: AuctionWithId) {
   )
 }
 
-export function auctionSorter(
-  auctions: AuctionWithId[],
-  eventAuctionIds: string[],
+export function auctionSorter({
+  auctions,
+  eventAuctionIds,
+  uid = "notauserid",
+  pendingAuctionId = "notapendingauctionid"
+}: {
+  auctions: AuctionWithId[]
+  eventAuctionIds: string[]
   uid?: string
-) {
-  uid = uid || "notauserid"
-
+  pendingAuctionId?: string
+}) {
   return auctions.sort((a, b) => {
     const aHasWon = uid == a.bid?.uid,
       bHasWon = uid === b.bid?.uid
 
-    if (aHasWon !== !bHasWon) {
+    if (aHasWon !== bHasWon) {
       if (aHasWon) {
         return -1 // a first
       }
@@ -117,16 +121,31 @@ export function auctionSorter(
       }
     }
 
+    // Auction open for bidding takes precedence over everything
     const aOpen = isAuctionOpen(a),
-      bOpen = isAuctionOpen(b),
-      aFinished = a.status === AuctionStatus.Finished,
-      bFinished = b.status === AuctionStatus.Finished
-
-    if (aOpen !== bOpen || aFinished !== bFinished) {
-      if (aOpen || bFinished) {
+      bOpen = isAuctionOpen(b)
+    if (aOpen !== bOpen) {
+      if (aOpen) {
         return -1 // a first
       }
-      if (bOpen || aFinished) {
+      if (bOpen) {
+        return 1 // b first
+      }
+    }
+
+    // Then pending
+    if (a.id === pendingAuctionId) return -1
+    if (b.id === pendingAuctionId) return 1
+
+    const aFinished = a.status === AuctionStatus.Finished,
+      bFinished = b.status === AuctionStatus.Finished
+
+    // Then finisheds go last
+    if (aFinished !== bFinished) {
+      if (bFinished) {
+        return -1 // a first
+      }
+      if (aFinished) {
         return 1 // b first
       }
     }
