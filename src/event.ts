@@ -67,7 +67,7 @@ export enum StreamEventObjectType {
   Shopping = "shopping",
   ShopifyProduct = "shopifyProduct",
   Auction = "auction",
-  Advertisement = "advertisement",
+  CustomContent = "customContent",
   AuctionV2 = "auctionV2"
 }
 
@@ -82,7 +82,7 @@ export type StreamEventObject =
   | ShoppingCard
   | ShoppingProductCard
   | AutoShoppingCard
-  | AdCard
+  | CustomContentCard
   | AuctionCard
   | AuctionV2Card
 
@@ -244,8 +244,8 @@ export interface AutoShoppingCard extends StreamEventCard {
   rotateEvery: number
 }
 
-export interface AdCard extends StreamEventCard {
-  objectType: StreamEventObjectType.Advertisement
+export interface CustomContentCard extends StreamEventCard {
+  objectType: StreamEventObjectType.CustomContent
   imgUrl: string
   title: string
   btnText: string
