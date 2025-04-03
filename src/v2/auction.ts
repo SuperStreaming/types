@@ -1,5 +1,7 @@
 import { Timestamp } from "@firebase/firestore/lite"
 
+import { StreamEvent, StreamEventObjectType } from "../event"
+
 // All frontend dates are stored as timestamps on firestore
 export type Datestamp = Date | Timestamp
 
@@ -159,4 +161,20 @@ export function auctionSorter({
 
     return aIndex - bIndex
   })
+}
+
+export function getAuctionEventIds(event: StreamEvent) {
+  return (event.objects || [])
+    .filter((product) => StreamEventObjectType.AuctionV2 === product.objectType)
+    .map(({ auctionId }) => auctionId)
+}
+
+export function sortEventAuctions(
+  event: StreamEvent,
+  auctions: AuctionWithId[] = [],
+  uid = "notauserid",
+  pendingAuctionId = "notapendingauctionid"
+): AuctionWithId[] {
+  const eventAuctionIds = getAuctionEventIds(event)
+  return auctionSorter({ auctions, eventAuctionIds, uid, pendingAuctionId })
 }
