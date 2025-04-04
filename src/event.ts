@@ -157,6 +157,10 @@ export type StreamEvent = {
     imageUrl: string
     description: string
   }
+
+  bettingProvider?: string
+
+  tickets?: boolean
 }
 
 export type Event = StreamEvent
@@ -183,6 +187,7 @@ export type Segment = {
 export interface QuizEventStream {
   platform: Platform
   url: string
+  primary?: boolean
 }
 
 export interface Pool {
