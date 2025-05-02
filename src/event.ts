@@ -129,6 +129,8 @@ export type StreamEvent = {
     duration: number
     popcornRule?: { withinSeconds: number; extendBySeconds: number }
     bidRules: { rangeMin: number; rangeMax?: number; bump: number }[]
+    autoRun: boolean
+    autoRunDelay: number
   }
 
   whitelistIds?: string[]
