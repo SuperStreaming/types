@@ -74,6 +74,7 @@ export type Auction = {
   reminderEmailsSent?: number
 
   noMoreBids?: boolean
+  tags: string[]
 }
 
 export type AuctionWithId = Auction & { id: string }
