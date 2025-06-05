@@ -33,6 +33,11 @@ export enum AuctionStartOption {
   OnBid = "OnBid"
 }
 
+export enum BuyUrlState {
+  Created = "Created",
+  Bought = "Bought",
+}
+
 export type Auction = {
   shopId: string
   appId: string
@@ -75,6 +80,8 @@ export type Auction = {
 
   noMoreBids?: boolean
   tags: string[]
+
+  buyUrl?: BuyUrlState
 }
 
 export type AuctionWithId = Auction & { id: string }
