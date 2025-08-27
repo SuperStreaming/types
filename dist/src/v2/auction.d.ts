@@ -87,3 +87,12 @@ export declare function auctionSorter({ auctions, eventAuctionIds, uid, pendingA
 }): AuctionWithId[];
 export declare function getAuctionEventIds(event: StreamEvent): string[];
 export declare function sortEventAuctions(event: StreamEvent, auctions?: AuctionWithId[], uid?: string, pendingAuctionId?: string): AuctionWithId[];
+type AuctionOrderProps = {
+    auction: AuctionWithId;
+    uid: string;
+};
+export declare function shouldGoFirst({ auction, uid }: AuctionOrderProps): boolean;
+export declare function shouldGoLast({ auction }: {
+    auction: AuctionWithId;
+}): boolean;
+export {};

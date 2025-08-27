@@ -35,7 +35,7 @@ export enum AuctionStartOption {
 
 export enum BuyUrlState {
   Created = "Created",
-  Bought = "Bought",
+  Bought = "Bought"
 }
 
 export type Auction = {
@@ -185,4 +185,18 @@ export function sortEventAuctions(
 ): AuctionWithId[] {
   const eventAuctionIds = getAuctionEventIds(event)
   return auctionSorter({ auctions, eventAuctionIds, uid, pendingAuctionId })
+}
+
+type AuctionOrderProps = { auction: AuctionWithId; uid: string }
+
+function auctionWonBy({ auction, uid }: AuctionOrderProps) {
+  return auction.bid?.uid === uid
+}
+
+export function shouldGoFirst({ auction, uid }: AuctionOrderProps) {
+  return auctionWonBy({ auction, uid }) || isAuctionOpen(auction)
+}
+
+export function shouldGoLast({ auction }: { auction: AuctionWithId }) {
+  return auction.status === AuctionStatus.Finished
 }

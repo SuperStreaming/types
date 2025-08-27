@@ -3,6 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.StreamEventObjectType = exports.QuizEventCategory = exports.QuestionState = exports.SegmentState = exports.EventState = exports.NONE_PLAYER = void 0;
 exports.getNextQuestionState = getNextQuestionState;
 exports.getAllQuestions = getAllQuestions;
+exports.cardsSorter = cardsSorter;
+const auction_1 = require("./v2/auction");
 exports.NONE_PLAYER = "None";
 var EventState;
 (function (EventState) {
@@ -71,5 +73,41 @@ function getAllQuestions(event) {
         ...(event.segments || []).flatMap((x) => x.questions || []),
         ...(event.objects || []).filter((x) => x.objectType === StreamEventObjectType.Question)
     ];
+}
+function cardsSorter({ cards, auctions, uid = "notauserid" }) {
+    return cards.sort((a, b) => {
+        const aAuction = a.objectType === StreamEventObjectType.AuctionV2
+            ? auctions[a.auctionId]
+            : undefined, bAuction = b.objectType === StreamEventObjectType.AuctionV2
+            ? auctions[b.auctionId]
+            : undefined;
+        if (aAuction || bAuction) {
+            if (aAuction && bAuction) {
+                if ((0, auction_1.shouldGoFirst)({ auction: aAuction, uid }) &&
+                    !(0, auction_1.shouldGoFirst)({ auction: bAuction, uid }))
+                    return -1;
+                if ((0, auction_1.shouldGoLast)({ auction: bAuction }) &&
+                    !(0, auction_1.shouldGoLast)({ auction: aAuction }))
+                    return -1;
+            }
+            else if (aAuction) {
+                if ((0, auction_1.shouldGoFirst)({ auction: aAuction, uid }))
+                    return -1;
+                if ((0, auction_1.shouldGoLast)({ auction: aAuction }))
+                    return 1;
+            }
+            else if (bAuction) {
+                if ((0, auction_1.shouldGoFirst)({ auction: bAuction, uid }))
+                    return 1;
+                if ((0, auction_1.shouldGoLast)({ auction: bAuction }))
+                    return -1;
+            }
+        }
+        const aIndex = cards.indexOf(a), bIndex = cards.indexOf(b);
+        if (aIndex !== bIndex) {
+            return aIndex < bIndex ? 1 : -1;
+        }
+        return a.id.localeCompare(b.id);
+    });
 }
 //# sourceMappingURL=event.js.map

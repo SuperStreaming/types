@@ -1,5 +1,6 @@
 import { Timestamp } from "@firebase/firestore/lite";
 import { type MoneyType } from "./money";
+import { AuctionWithId } from "./v2/auction";
 export declare const NONE_PLAYER = "None";
 export declare enum EventState {
     Undisplayed = "undisplayed",
@@ -189,3 +190,8 @@ export interface AuctionV2Card extends StreamEventCard {
     objectType: StreamEventObjectType.AuctionV2;
     auctionId: string;
 }
+export declare function cardsSorter<T = object>({ cards, auctions, uid }: {
+    cards: ((ShoppingProductCard | CustomContentCard | AuctionV2Card) & T)[];
+    auctions: Record<string, AuctionWithId>;
+    uid?: string;
+}): ((ShoppingProductCard | CustomContentCard | AuctionV2Card) & T)[];

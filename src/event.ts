@@ -1,6 +1,7 @@
 import { Timestamp } from "@firebase/firestore/lite"
 
 import { type MoneyType } from "./money"
+import { AuctionWithId, shouldGoFirst, shouldGoLast } from "./v2/auction"
 
 export const NONE_PLAYER = "None"
 
@@ -267,4 +268,55 @@ export interface AuctionCard extends StreamEventCard {
 export interface AuctionV2Card extends StreamEventCard {
   objectType: StreamEventObjectType.AuctionV2
   auctionId: string
+}
+
+export function cardsSorter<T = object>({
+  cards,
+  auctions,
+  uid = "notauserid"
+}: {
+  cards: ((ShoppingProductCard | CustomContentCard | AuctionV2Card) & T)[]
+  auctions: Record<string, AuctionWithId>
+  uid?: string
+}) {
+  return cards.sort((a, b) => {
+    const aAuction =
+        a.objectType === StreamEventObjectType.AuctionV2
+          ? auctions[a.auctionId]
+          : undefined,
+      bAuction =
+        b.objectType === StreamEventObjectType.AuctionV2
+          ? auctions[b.auctionId]
+          : undefined
+
+    if (aAuction || bAuction) {
+      if (aAuction && bAuction) {
+        if (
+          shouldGoFirst({ auction: aAuction, uid }) &&
+          !shouldGoFirst({ auction: bAuction, uid })
+        )
+          return -1
+        if (
+          shouldGoLast({ auction: bAuction }) &&
+          !shouldGoLast({ auction: aAuction })
+        )
+          return -1
+      } else if (aAuction) {
+        if (shouldGoFirst({ auction: aAuction, uid })) return -1
+        if (shouldGoLast({ auction: aAuction })) return 1
+      } else if (bAuction) {
+        if (shouldGoFirst({ auction: bAuction, uid })) return 1
+        if (shouldGoLast({ auction: bAuction })) return -1
+      }
+    }
+
+    const aIndex = cards.indexOf(a),
+      bIndex = cards.indexOf(b)
+
+    if (aIndex !== bIndex) {
+      return aIndex < bIndex ? 1 : -1
+    }
+
+    return a.id.localeCompare(b.id)
+  })
 }

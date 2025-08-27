@@ -5,6 +5,8 @@ exports.isAuctionOpen = isAuctionOpen;
 exports.auctionSorter = auctionSorter;
 exports.getAuctionEventIds = getAuctionEventIds;
 exports.sortEventAuctions = sortEventAuctions;
+exports.shouldGoFirst = shouldGoFirst;
+exports.shouldGoLast = shouldGoLast;
 const event_1 = require("../event");
 var AuctionStatus;
 (function (AuctionStatus) {
@@ -89,5 +91,15 @@ function getAuctionEventIds(event) {
 function sortEventAuctions(event, auctions = [], uid = "notauserid", pendingAuctionId = "notapendingauctionid") {
     const eventAuctionIds = getAuctionEventIds(event);
     return auctionSorter({ auctions, eventAuctionIds, uid, pendingAuctionId });
+}
+function auctionWonBy({ auction, uid }) {
+    var _a;
+    return ((_a = auction.bid) === null || _a === void 0 ? void 0 : _a.uid) === uid;
+}
+function shouldGoFirst({ auction, uid }) {
+    return auctionWonBy({ auction, uid }) || isAuctionOpen(auction);
+}
+function shouldGoLast({ auction }) {
+    return auction.status === AuctionStatus.Finished;
 }
 //# sourceMappingURL=auction.js.map
