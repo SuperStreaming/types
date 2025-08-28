@@ -78,15 +78,6 @@ export type SegmentTypes = "question" | "shopping" | "auction"
 
 export type QuestionType = "trivia" | "predict" | "recall"
 
-export type StreamEventObject =
-  | Question
-  | ShoppingCard
-  | ShoppingProductCard
-  | AutoShoppingCard
-  | CustomContentCard
-  | AuctionCard
-  | AuctionV2Card
-
 export type StreamEvent = {
   id: string
   urlFriendlyId: string
@@ -270,23 +261,32 @@ export interface AuctionV2Card extends StreamEventCard {
   auctionId: string
 }
 
+export type StreamEventObject =
+  | Question
+  | ShoppingCard
+  | ShoppingProductCard
+  | AutoShoppingCard
+  | CustomContentCard
+  | AuctionCard
+  | AuctionV2Card
+
 export function cardsSorter<T = object>({
   cards,
   auctions,
   uid = "notauserid"
 }: {
-  cards: ((ShoppingProductCard | CustomContentCard | AuctionV2Card) & T)[]
+  cards: (StreamEventObject & T)[]
   auctions: Record<string, AuctionWithId>
   uid?: string
 }) {
   return cards.sort((a, b) => {
     const aAuction =
         a.objectType === StreamEventObjectType.AuctionV2
-          ? auctions[a.auctionId]
+          ? auctions[(a as AuctionV2Card).auctionId]
           : undefined,
       bAuction =
         b.objectType === StreamEventObjectType.AuctionV2
-          ? auctions[b.auctionId]
+          ? auctions[(b as AuctionV2Card).auctionId]
           : undefined
 
     if (aAuction || bAuction) {

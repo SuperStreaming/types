@@ -46,7 +46,6 @@ export declare enum StreamEventObjectType {
 export type Platform = "twitch" | "youtube" | null;
 export type SegmentTypes = "question" | "shopping" | "auction";
 export type QuestionType = "trivia" | "predict" | "recall";
-export type StreamEventObject = Question | ShoppingCard | ShoppingProductCard | AutoShoppingCard | CustomContentCard | AuctionCard | AuctionV2Card;
 export type StreamEvent = {
     id: string;
     urlFriendlyId: string;
@@ -190,8 +189,9 @@ export interface AuctionV2Card extends StreamEventCard {
     objectType: StreamEventObjectType.AuctionV2;
     auctionId: string;
 }
+export type StreamEventObject = Question | ShoppingCard | ShoppingProductCard | AutoShoppingCard | CustomContentCard | AuctionCard | AuctionV2Card;
 export declare function cardsSorter<T = object>({ cards, auctions, uid }: {
-    cards: ((ShoppingProductCard | CustomContentCard | AuctionV2Card) & T)[];
+    cards: (StreamEventObject & T)[];
     auctions: Record<string, AuctionWithId>;
     uid?: string;
-}): ((ShoppingProductCard | CustomContentCard | AuctionV2Card) & T)[];
+}): (StreamEventObject & T)[];
