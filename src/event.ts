@@ -274,13 +274,25 @@ export type StreamEventObject =
 export function cardsSorter<T = object>({
   cards,
   auctions,
-  uid = "notauserid"
+  uid = "notauserid",
+  log = false
 }: {
   cards: (StreamEventObject & T)[]
   auctions: Record<string, AuctionWithId>
   uid?: string
+  log?: boolean
 }) {
-  return cards.slice().sort((a, b) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
+  const _log = log ? console.log : (..._args: any[]) => {}
+  _log(
+    "Sorting cards:",
+    cards.map((card) => [
+      `${card.id}-${card.objectType === StreamEventObjectType.AuctionV2 ? card.auctionId : null}`,
+      card.objectType
+    ])
+  )
+  const arrToSort = cards.slice()
+  return arrToSort.sort((a, b) => {
     const aAuction =
         a.objectType === StreamEventObjectType.AuctionV2
           ? auctions[a.auctionId]
@@ -297,8 +309,8 @@ export function cardsSorter<T = object>({
       return -1
     }
 
-    // const aId = `${a.id} | ${aAuction?.id}`,
-    //   bId = `${b.id} | ${bAuction?.id}`
+    const aId = `${a.id} | ${aAuction?.id}`,
+      bId = `${b.id} | ${bAuction?.id}`
 
     if (aAuction || bAuction) {
       const aFirst = aAuction
@@ -310,14 +322,14 @@ export function cardsSorter<T = object>({
 
       if (aAuction && bAuction) {
         if (aFirst && !bFirst) {
-          // console.log(aId, "goes before", bId)
+          _log(aId, "goes before", bId)
           return -1
         }
         if (aFirst && bFirst) {
           return 0
         }
         if (aLast && !bLast) {
-          // console.log(bId, "goes before", aId)
+          _log(bId, "goes before", aId)
           return -1
         }
 
@@ -330,41 +342,41 @@ export function cardsSorter<T = object>({
 
       if (aAuction) {
         if (shouldGoFirst({ auction: aAuction, uid })) {
-          // console.log(aId, "goes before", bId)
+          _log(aId, "goes before", bId)
           return -1
         }
         if (shouldGoLast({ auction: aAuction })) {
-          // console.log(aId, "goes after", bId)
+          _log(aId, "goes after", bId)
           return 1
         }
-        // console.log("no special ordering for", aId)
+        _log("no special ordering for", aId)
       } else if (bAuction) {
         if (shouldGoFirst({ auction: bAuction, uid })) {
-          // console.log(bId, "goes before", aId)
+          _log(bId, "goes before", aId)
           return 1
         }
         if (shouldGoLast({ auction: bAuction })) {
-          // console.log(bId, "goes after", aId)
+          _log(bId, "goes after", aId)
           return -1
         }
-        // console.log("no special ordering for", bId)
+        _log("no special ordering for", bId)
       }
     }
 
     const aIndex = cards.indexOf(a),
       bIndex = cards.indexOf(b)
 
-    // console.log(a.id, a.objectType, b.id, b.objectType, aIndex, bIndex)
+    _log(a.id, a.objectType, b.id, b.objectType, aIndex, bIndex)
 
     if (aIndex !== bIndex) {
       const aBefore = aIndex < bIndex
-      // console.log(
-      //   aBefore ? aId : bId,
-      //   aBefore ? aIndex : bIndex,
-      //   "goes before",
-      //   aBefore ? bId : aId,
-      //   aBefore ? bIndex : aIndex
-      // )
+      _log(
+        aBefore ? aId : bId,
+        aBefore ? aIndex : bIndex,
+        "goes before",
+        aBefore ? bId : aId,
+        aBefore ? bIndex : aIndex
+      )
       return aBefore ? -1 : 1
     }
 

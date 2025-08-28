@@ -190,8 +190,9 @@ export interface AuctionV2Card extends StreamEventCard {
     auctionId: string;
 }
 export type StreamEventObject = Question | ShoppingCard | ShoppingProductCard | AutoShoppingCard | CustomContentCard | AuctionCard | AuctionV2Card;
-export declare function cardsSorter<T = object>({ cards, auctions, uid }: {
+export declare function cardsSorter<T = object>({ cards, auctions, uid, log }: {
     cards: (StreamEventObject & T)[];
     auctions: Record<string, AuctionWithId>;
     uid?: string;
+    log?: boolean;
 }): (StreamEventObject & T)[];
