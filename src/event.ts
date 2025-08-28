@@ -156,6 +156,7 @@ export type StreamEvent = {
   bettingProvider?: string
 
   tickets?: boolean
+  short?: string
 }
 
 export type Event = StreamEvent

@@ -111,6 +111,7 @@ export type StreamEvent = {
     };
     bettingProvider?: string;
     tickets?: boolean;
+    short?: string;
 };
 export type Event = StreamEvent;
 export declare function getAllQuestions(event: StreamEvent): Question[];
