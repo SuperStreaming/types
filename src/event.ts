@@ -1,5 +1,6 @@
 import { Timestamp } from "@firebase/firestore/lite"
 
+import { ensureDate } from "./common"
 import { type MoneyType } from "./money"
 import { AuctionWithId, shouldGoFirst, shouldGoLast } from "./v2/auction"
 
@@ -279,42 +280,92 @@ export function cardsSorter<T = object>({
   auctions: Record<string, AuctionWithId>
   uid?: string
 }) {
-  return cards.sort((a, b) => {
+  return cards.slice().sort((a, b) => {
     const aAuction =
         a.objectType === StreamEventObjectType.AuctionV2
-          ? auctions[(a as AuctionV2Card).auctionId]
+          ? auctions[a.auctionId]
           : undefined,
       bAuction =
         b.objectType === StreamEventObjectType.AuctionV2
-          ? auctions[(b as AuctionV2Card).auctionId]
+          ? auctions[b.auctionId]
           : undefined
 
+    if (a.objectType === StreamEventObjectType.AuctionV2 && !aAuction) {
+      return 1
+    }
+    if (b.objectType === StreamEventObjectType.AuctionV2 && !bAuction) {
+      return -1
+    }
+
+    // const aId = `${a.id} | ${aAuction?.id}`,
+    //   bId = `${b.id} | ${bAuction?.id}`
+
     if (aAuction || bAuction) {
+      const aFirst = aAuction
+          ? shouldGoFirst({ auction: aAuction, uid })
+          : false,
+        bFirst = bAuction ? shouldGoFirst({ auction: bAuction, uid }) : false,
+        aLast = aAuction ? shouldGoLast({ auction: aAuction }) : false,
+        bLast = bAuction ? shouldGoLast({ auction: bAuction }) : false
+
       if (aAuction && bAuction) {
-        if (
-          shouldGoFirst({ auction: aAuction, uid }) &&
-          !shouldGoFirst({ auction: bAuction, uid })
-        )
+        if (aFirst && !bFirst) {
+          // console.log(aId, "goes before", bId)
           return -1
-        if (
-          shouldGoLast({ auction: bAuction }) &&
-          !shouldGoLast({ auction: aAuction })
-        )
+        }
+        if (aFirst && bFirst) {
+          return 0
+        }
+        if (aLast && !bLast) {
+          // console.log(bId, "goes before", aId)
           return -1
-      } else if (aAuction) {
-        if (shouldGoFirst({ auction: aAuction, uid })) return -1
-        if (shouldGoLast({ auction: aAuction })) return 1
+        }
+
+        if (bLast && aLast) {
+          return ensureDate(aAuction.endTime) < ensureDate(bAuction.endTime)
+            ? -1
+            : 1
+        }
+      }
+
+      if (aAuction) {
+        if (shouldGoFirst({ auction: aAuction, uid })) {
+          // console.log(aId, "goes before", bId)
+          return -1
+        }
+        if (shouldGoLast({ auction: aAuction })) {
+          // console.log(aId, "goes after", bId)
+          return 1
+        }
+        // console.log("no special ordering for", aId)
       } else if (bAuction) {
-        if (shouldGoFirst({ auction: bAuction, uid })) return 1
-        if (shouldGoLast({ auction: bAuction })) return -1
+        if (shouldGoFirst({ auction: bAuction, uid })) {
+          // console.log(bId, "goes before", aId)
+          return 1
+        }
+        if (shouldGoLast({ auction: bAuction })) {
+          // console.log(bId, "goes after", aId)
+          return -1
+        }
+        // console.log("no special ordering for", bId)
       }
     }
 
     const aIndex = cards.indexOf(a),
       bIndex = cards.indexOf(b)
 
+    // console.log(a.id, a.objectType, b.id, b.objectType, aIndex, bIndex)
+
     if (aIndex !== bIndex) {
-      return aIndex < bIndex ? 1 : -1
+      const aBefore = aIndex < bIndex
+      // console.log(
+      //   aBefore ? aId : bId,
+      //   aBefore ? aIndex : bIndex,
+      //   "goes before",
+      //   aBefore ? bId : aId,
+      //   aBefore ? bIndex : aIndex
+      // )
+      return aBefore ? -1 : 1
     }
 
     return a.id.localeCompare(b.id)

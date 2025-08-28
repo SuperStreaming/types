@@ -4,6 +4,7 @@ exports.StreamEventObjectType = exports.QuizEventCategory = exports.QuestionStat
 exports.getNextQuestionState = getNextQuestionState;
 exports.getAllQuestions = getAllQuestions;
 exports.cardsSorter = cardsSorter;
+const common_1 = require("./common");
 const auction_1 = require("./v2/auction");
 exports.NONE_PLAYER = "None";
 var EventState;
@@ -75,37 +76,77 @@ function getAllQuestions(event) {
     ];
 }
 function cardsSorter({ cards, auctions, uid = "notauserid" }) {
-    return cards.sort((a, b) => {
+    return cards.slice().sort((a, b) => {
         const aAuction = a.objectType === StreamEventObjectType.AuctionV2
             ? auctions[a.auctionId]
             : undefined, bAuction = b.objectType === StreamEventObjectType.AuctionV2
             ? auctions[b.auctionId]
             : undefined;
+        if (a.objectType === StreamEventObjectType.AuctionV2 && !aAuction) {
+            return 1;
+        }
+        if (b.objectType === StreamEventObjectType.AuctionV2 && !bAuction) {
+            return -1;
+        }
+        // const aId = `${a.id} | ${aAuction?.id}`,
+        //   bId = `${b.id} | ${bAuction?.id}`
         if (aAuction || bAuction) {
+            const aFirst = aAuction
+                ? (0, auction_1.shouldGoFirst)({ auction: aAuction, uid })
+                : false, bFirst = bAuction ? (0, auction_1.shouldGoFirst)({ auction: bAuction, uid }) : false, aLast = aAuction ? (0, auction_1.shouldGoLast)({ auction: aAuction }) : false, bLast = bAuction ? (0, auction_1.shouldGoLast)({ auction: bAuction }) : false;
             if (aAuction && bAuction) {
-                if ((0, auction_1.shouldGoFirst)({ auction: aAuction, uid }) &&
-                    !(0, auction_1.shouldGoFirst)({ auction: bAuction, uid }))
+                if (aFirst && !bFirst) {
+                    // console.log(aId, "goes before", bId)
                     return -1;
-                if ((0, auction_1.shouldGoLast)({ auction: bAuction }) &&
-                    !(0, auction_1.shouldGoLast)({ auction: aAuction }))
+                }
+                if (aFirst && bFirst) {
+                    return 0;
+                }
+                if (aLast && !bLast) {
+                    // console.log(bId, "goes before", aId)
                     return -1;
+                }
+                if (bLast && aLast) {
+                    return (0, common_1.ensureDate)(aAuction.endTime) < (0, common_1.ensureDate)(bAuction.endTime)
+                        ? -1
+                        : 1;
+                }
             }
-            else if (aAuction) {
-                if ((0, auction_1.shouldGoFirst)({ auction: aAuction, uid }))
+            if (aAuction) {
+                if ((0, auction_1.shouldGoFirst)({ auction: aAuction, uid })) {
+                    // console.log(aId, "goes before", bId)
                     return -1;
-                if ((0, auction_1.shouldGoLast)({ auction: aAuction }))
+                }
+                if ((0, auction_1.shouldGoLast)({ auction: aAuction })) {
+                    // console.log(aId, "goes after", bId)
                     return 1;
+                }
+                // console.log("no special ordering for", aId)
             }
             else if (bAuction) {
-                if ((0, auction_1.shouldGoFirst)({ auction: bAuction, uid }))
+                if ((0, auction_1.shouldGoFirst)({ auction: bAuction, uid })) {
+                    // console.log(bId, "goes before", aId)
                     return 1;
-                if ((0, auction_1.shouldGoLast)({ auction: bAuction }))
+                }
+                if ((0, auction_1.shouldGoLast)({ auction: bAuction })) {
+                    // console.log(bId, "goes after", aId)
                     return -1;
+                }
+                // console.log("no special ordering for", bId)
             }
         }
         const aIndex = cards.indexOf(a), bIndex = cards.indexOf(b);
+        // console.log(a.id, a.objectType, b.id, b.objectType, aIndex, bIndex)
         if (aIndex !== bIndex) {
-            return aIndex < bIndex ? 1 : -1;
+            const aBefore = aIndex < bIndex;
+            // console.log(
+            //   aBefore ? aId : bId,
+            //   aBefore ? aIndex : bIndex,
+            //   "goes before",
+            //   aBefore ? bId : aId,
+            //   aBefore ? bIndex : aIndex
+            // )
+            return aBefore ? -1 : 1;
         }
         return a.id.localeCompare(b.id);
     });
