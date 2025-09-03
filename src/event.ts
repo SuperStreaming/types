@@ -79,12 +79,16 @@ export type SegmentTypes = "question" | "shopping" | "auction"
 
 export type QuestionType = "trivia" | "predict" | "recall"
 
-export type StreamEvent = {
-  id: string
-  urlFriendlyId: string
-
+export type BrandInfo = {
+  id?: string
   brand: string
   brandImgUrl?: string
+  mobileDomain?: string
+}
+
+export type StreamEvent = BrandInfo & {
+  id: string
+  urlFriendlyId: string
 
   gameName: string
   subtitle: string
@@ -157,6 +161,7 @@ export type StreamEvent = {
 
   tickets?: boolean
   short?: string
+  shorts?: string[]
 }
 
 export type Event = StreamEvent

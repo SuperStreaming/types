@@ -46,11 +46,15 @@ export declare enum StreamEventObjectType {
 export type Platform = "twitch" | "youtube" | null;
 export type SegmentTypes = "question" | "shopping" | "auction";
 export type QuestionType = "trivia" | "predict" | "recall";
-export type StreamEvent = {
-    id: string;
-    urlFriendlyId: string;
+export type BrandInfo = {
+    id?: string;
     brand: string;
     brandImgUrl?: string;
+    mobileDomain?: string;
+};
+export type StreamEvent = BrandInfo & {
+    id: string;
+    urlFriendlyId: string;
     gameName: string;
     subtitle: string;
     featured: boolean;
@@ -112,6 +116,7 @@ export type StreamEvent = {
     bettingProvider?: string;
     tickets?: boolean;
     short?: string;
+    shorts?: string[];
 };
 export type Event = StreamEvent;
 export declare function getAllQuestions(event: StreamEvent): Question[];
