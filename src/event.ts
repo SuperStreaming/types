@@ -206,6 +206,8 @@ export interface StreamEventCard {
   objectType: StreamEventObjectType
   undisplayed: boolean
   active: boolean
+
+  highlightBetween?: { start: number; end?: number }
 }
 
 export interface Question extends StreamEventCard {
