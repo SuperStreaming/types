@@ -24,15 +24,22 @@ export declare enum QuestionState {
     Closed = "closed"
 }
 export declare function getNextQuestionState(state: QuestionState): QuestionState.Upcoming | QuestionState.Active | QuestionState.Suspended | QuestionState.Settled | QuestionState.Closed;
-export declare enum QuizEventCategory {
+export declare enum StreamEventCategory {
     All = "All",
-    Affiliate = "Affiliate",
-    Auction = "Auction",
-    Shopping = "Shopping",
-    Esports = "Esports",
+    AntiquesCollectibles = "Antiques & Collectibles",
+    ArtsEntertainment = "Arts & Entertainment",
+    AutosVehicles = "Autos & Vehicles",
+    BeautyFitness = "Beauty & Fitness",
+    BusinessIndustrial = "Business & Industrial",
+    ConsumerElectronics = "Consumer Electronics",
+    FoodDrink = "Food & Drink",
+    Games = "Games",
+    Health = "Health",
+    HomeGarden = "Home & Garden",
+    PeopleSociety = "People & Society",
+    PetsAnimals = "Pets & Animals",
     Sports = "Sports",
-    Movies = "Movies",
-    Shows = "Shows"
+    ToysHobbies = "Toys & Hobbies"
 }
 export declare enum StreamEventObjectType {
     Question = "question",
@@ -62,7 +69,7 @@ export type StreamEvent = BrandInfo & {
     subtitle: string;
     featured: boolean;
     type: "free" | "paid";
-    category?: QuizEventCategory;
+    category?: StreamEventCategory;
     subCategory?: string;
     state: EventState;
     startsAt: Timestamp;

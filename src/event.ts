@@ -52,15 +52,41 @@ export function getNextQuestionState(state: QuestionState) {
   }
 }
 
-export enum QuizEventCategory {
+/*
+https://app.clickup.com/t/86c5ttayg
+Apparel 
+Antiques & Collectibles
+Arts & Entertainment
+Autos & Vehicles
+Beauty & Fitness
+Business & Industrial
+Consumer Electronics
+Food & Drink
+Games
+Health
+Home & Garden
+People & Society
+Pets & Animals
+Sports
+Toys & Hobbies
+*/
+
+export enum StreamEventCategory {
   All = "All",
-  Affiliate = "Affiliate",
-  Auction = "Auction",
-  Shopping = "Shopping",
-  Esports = "Esports",
+  AntiquesCollectibles = "Antiques & Collectibles",
+  ArtsEntertainment = "Arts & Entertainment",
+  AutosVehicles = "Autos & Vehicles",
+  BeautyFitness = "Beauty & Fitness",
+  BusinessIndustrial = "Business & Industrial",
+  ConsumerElectronics = "Consumer Electronics",
+  FoodDrink = "Food & Drink",
+  Games = "Games",
+  Health = "Health",
+  HomeGarden = "Home & Garden",
+  PeopleSociety = "People & Society",
+  PetsAnimals = "Pets & Animals",
   Sports = "Sports",
-  Movies = "Movies",
-  Shows = "Shows"
+  ToysHobbies = "Toys & Hobbies"
 }
 
 export enum StreamEventObjectType {
@@ -98,7 +124,7 @@ export type StreamEvent = BrandInfo & {
   featured: boolean
 
   type: "free" | "paid"
-  category?: QuizEventCategory
+  category?: StreamEventCategory
   subCategory?: string
   state: EventState
   startsAt: Timestamp
