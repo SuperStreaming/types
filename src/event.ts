@@ -73,7 +73,7 @@ export enum StreamEventObjectType {
   AuctionV2 = "auctionV2"
 }
 
-export type Platform = "twitch" | "youtube" | null
+export type Platform = "twitch" | "youtube" | "kick" | null
 
 export type SegmentTypes = "question" | "shopping" | "auction"
 
@@ -84,6 +84,9 @@ export type BrandInfo = {
   brand: string
   brandImgUrl?: string
   mobileDomain?: string
+  ytChannel?: string
+  ytChannelId?: string
+  twitchChannel?: string
 }
 
 export type StreamEvent = BrandInfo & {
