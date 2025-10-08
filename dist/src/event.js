@@ -1,7 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.StreamEventObjectType = exports.StreamEventCategory = exports.QuestionState = exports.SegmentState = exports.EventState = exports.NONE_PLAYER = void 0;
+exports.StreamEventType = exports.StreamEventObjectType = exports.StreamEventCategory = exports.QuestionState = exports.SegmentState = exports.EventState = exports.NONE_PLAYER = void 0;
 exports.getNextQuestionState = getNextQuestionState;
+exports.allCategories = allCategories;
+exports.getStreamType = getStreamType;
 exports.getAllQuestions = getAllQuestions;
 exports.cardsSorter = cardsSorter;
 const common_1 = require("./common");
@@ -93,6 +95,20 @@ var StreamEventObjectType;
     StreamEventObjectType["CustomContent"] = "customContent";
     StreamEventObjectType["AuctionV2"] = "auctionV2";
 })(StreamEventObjectType || (exports.StreamEventObjectType = StreamEventObjectType = {}));
+function* allCategories() {
+    for (const [k, v] of Object.entries(StreamEventCategory)) {
+        yield [k, v];
+    }
+}
+var StreamEventType;
+(function (StreamEventType) {
+    StreamEventType["Game"] = "Game";
+    StreamEventType["Auction"] = "Auction";
+    StreamEventType["Shopping"] = "Shopping";
+})(StreamEventType || (exports.StreamEventType = StreamEventType = {}));
+function getStreamType(event) {
+    return event.eventType || event.category;
+}
 function getAllQuestions(event) {
     return [
         ...(event.questions || []),

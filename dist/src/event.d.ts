@@ -50,6 +50,7 @@ export declare enum StreamEventObjectType {
     CustomContent = "customContent",
     AuctionV2 = "auctionV2"
 }
+export declare function allCategories(): Generator<readonly [string, StreamEventCategory], void, unknown>;
 export type Platform = "twitch" | "youtube" | "kick" | null;
 export type SegmentTypes = "question" | "shopping" | "auction";
 export type QuestionType = "trivia" | "predict" | "recall";
@@ -62,6 +63,11 @@ export type BrandInfo = {
     ytChannelId?: string;
     twitchChannel?: string;
 };
+export declare enum StreamEventType {
+    Game = "Game",
+    Auction = "Auction",
+    Shopping = "Shopping"
+}
 export type StreamEvent = BrandInfo & {
     id: string;
     urlFriendlyId: string;
@@ -69,9 +75,12 @@ export type StreamEvent = BrandInfo & {
     subtitle: string;
     featured: boolean;
     type: "free" | "paid";
-    category?: StreamEventCategory;
+    eventType: StreamEventType;
+    category?: StreamEventCategory | StreamEventType;
     subCategory?: string;
     state: EventState;
+    createdAt?: Timestamp;
+    updatedAt?: Timestamp;
     startsAt: Timestamp;
     imageUrl?: string;
     streams: QuizEventStream[];
@@ -128,6 +137,7 @@ export type StreamEvent = BrandInfo & {
     short?: string;
     shorts?: string[];
 };
+export declare function getStreamType(event: Pick<StreamEvent, "eventType" | "category">): StreamEventType;
 export type Event = StreamEvent;
 export declare function getAllQuestions(event: StreamEvent): Question[];
 export type Segment = {

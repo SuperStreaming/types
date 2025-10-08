@@ -99,6 +99,12 @@ export enum StreamEventObjectType {
   AuctionV2 = "auctionV2"
 }
 
+export function* allCategories() {
+  for (const [k, v] of Object.entries(StreamEventCategory)) {
+    yield [k, v] as const
+  }
+}
+
 export type Platform = "twitch" | "youtube" | "kick" | null
 
 export type SegmentTypes = "question" | "shopping" | "auction"
@@ -115,6 +121,12 @@ export type BrandInfo = {
   twitchChannel?: string
 }
 
+export enum StreamEventType {
+  Game = "Game",
+  Auction = "Auction",
+  Shopping = "Shopping"
+}
+
 export type StreamEvent = BrandInfo & {
   id: string
   urlFriendlyId: string
@@ -124,9 +136,13 @@ export type StreamEvent = BrandInfo & {
   featured: boolean
 
   type: "free" | "paid"
-  category?: StreamEventCategory
+  eventType: StreamEventType
+
+  category?: StreamEventCategory | StreamEventType
   subCategory?: string
   state: EventState
+  createdAt?: Timestamp
+  updatedAt?: Timestamp
   startsAt: Timestamp
   imageUrl?: string
   streams: QuizEventStream[]
@@ -191,6 +207,12 @@ export type StreamEvent = BrandInfo & {
   tickets?: boolean
   short?: string
   shorts?: string[]
+}
+
+export function getStreamType(
+  event: Pick<StreamEvent, "eventType" | "category">
+) {
+  return event.eventType || event.category
 }
 
 export type Event = StreamEvent
