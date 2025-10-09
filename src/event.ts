@@ -52,8 +52,48 @@ export function getNextQuestionState(state: QuestionState) {
   }
 }
 
+export enum StreamEventType {
+  Game = "Game",
+  Auction = "Auction",
+  Shopping = "Shopping"
+}
+
 /*
-https://app.clickup.com/t/86c5ttayg
+Games:
+All 
+Esports
+Fitness and Health
+IRL
+Just Chatting
+Movies/TV
+Music
+Politics
+Science
+Sports 
+Stocks/Crypto
+Talk Shows/Podcasts
+Video Games
+
+Auctions:
+All
+Apparel 
+Antiques & Collectibles
+Arts & Entertainment
+Autos & Vehicles
+Beauty & Fitness
+Business & Industrial
+Consumer Electronics
+Food & Drink
+Games
+Health
+Home & Garden
+People & Society
+Pets & Animals
+Sports
+Toys & Hobbies
+
+Shopping
+All
 Apparel 
 Antiques & Collectibles
 Arts & Entertainment
@@ -71,8 +111,25 @@ Sports
 Toys & Hobbies
 */
 
-export enum StreamEventCategory {
-  All = "All",
+export enum StreamEventGameCategory {
+  All = "All Games",
+  Esports = "Esports",
+  FitnessHealth = "Fitness and Health",
+  IRL = "IRL",
+  JustChatting = "Just Chatting",
+  MoviesTV = "Movies/TV",
+  Music = "Music",
+  Politics = "Politics",
+  Science = "Science",
+  Sports = "Sports",
+  StocksCrypto = "Stocks/Crypto",
+  TalkShowsPodcasts = "Talk Shows/Podcasts",
+  VideoGames = "Video Games"
+}
+
+export enum StreamEventAuctionCategory {
+  All = "All Auctions",
+  Apparel = "Apparel",
   AntiquesCollectibles = "Antiques & Collectibles",
   ArtsEntertainment = "Arts & Entertainment",
   AutosVehicles = "Autos & Vehicles",
@@ -89,6 +146,42 @@ export enum StreamEventCategory {
   ToysHobbies = "Toys & Hobbies"
 }
 
+export enum StreamEventShoppingCategory {
+  All = "All Shopping",
+  Apparel = "Apparel",
+  AntiquesCollectibles = "Antiques & Collectibles",
+  ArtsEntertainment = "Arts & Entertainment",
+  AutosVehicles = "Autos & Vehicles",
+  BeautyFitness = "Beauty & Fitness",
+  BusinessIndustrial = "Business & Industrial",
+  ConsumerElectronics = "Consumer Electronics",
+  FoodDrink = "Food & Drink",
+  Games = "Games",
+  Health = "Health",
+  HomeGarden = "Home & Garden",
+  PeopleSociety = "People & Society",
+  PetsAnimals = "Pets & Animals",
+  Sports = "Sports",
+  ToysHobbies = "Toys & Hobbies"
+}
+
+export type StreamEventCategory =
+  | StreamEventGameCategory
+  | StreamEventAuctionCategory
+  | StreamEventShoppingCategory
+
+export function allShoppingCategories() {
+  return Object.entries(StreamEventShoppingCategory)
+}
+
+export function allAuctionCategories() {
+  return Object.entries(StreamEventAuctionCategory)
+}
+
+export function allGameCategories() {
+  return Object.entries(StreamEventGameCategory)
+}
+
 export enum StreamEventObjectType {
   Question = "question",
   AutoShopping = "autoShopping",
@@ -97,12 +190,6 @@ export enum StreamEventObjectType {
   Auction = "auction",
   CustomContent = "customContent",
   AuctionV2 = "auctionV2"
-}
-
-export function* allCategories() {
-  for (const [k, v] of Object.entries(StreamEventCategory)) {
-    yield [k, v] as const
-  }
 }
 
 export type Platform = "twitch" | "youtube" | "kick" | null
@@ -121,13 +208,7 @@ export type BrandInfo = {
   twitchChannel?: string
 }
 
-export enum StreamEventType {
-  Game = "Game",
-  Auction = "Auction",
-  Shopping = "Shopping"
-}
-
-export type StreamEvent = BrandInfo & {
+type _StreamEvent = BrandInfo & {
   id: string
   urlFriendlyId: string
 
@@ -136,9 +217,7 @@ export type StreamEvent = BrandInfo & {
   featured: boolean
 
   type: "free" | "paid"
-  eventType: StreamEventType
 
-  category?: StreamEventCategory | StreamEventType
   subCategory?: string
   state: EventState
   createdAt?: Timestamp
@@ -209,13 +288,29 @@ export type StreamEvent = BrandInfo & {
   shorts?: string[]
 }
 
-export function getStreamType(
+export type AuctionEvent = _StreamEvent & {
+  eventType: StreamEventType.Auction
+  category: StreamEventAuctionCategory
+}
+
+export type ShoppingEvent = {
+  eventType: StreamEventType.Shopping
+  category: StreamEventShoppingCategory
+} & _StreamEvent
+
+export type GameEvent = {
+  eventType: StreamEventType.Game
+  category: StreamEventGameCategory
+} & _StreamEvent
+
+export type StreamEvent = AuctionEvent | ShoppingEvent | GameEvent
+export type Event = StreamEvent
+
+export function getEventType(
   event: Pick<StreamEvent, "eventType" | "category">
 ) {
   return event.eventType || event.category
 }
-
-export type Event = StreamEvent
 
 export function getAllQuestions(event: StreamEvent) {
   return [

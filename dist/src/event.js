@@ -1,9 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.StreamEventType = exports.StreamEventObjectType = exports.StreamEventCategory = exports.QuestionState = exports.SegmentState = exports.EventState = exports.NONE_PLAYER = void 0;
+exports.StreamEventObjectType = exports.StreamEventShoppingCategory = exports.StreamEventAuctionCategory = exports.StreamEventGameCategory = exports.StreamEventType = exports.QuestionState = exports.SegmentState = exports.EventState = exports.NONE_PLAYER = void 0;
 exports.getNextQuestionState = getNextQuestionState;
-exports.allCategories = allCategories;
-exports.getStreamType = getStreamType;
+exports.allShoppingCategories = allShoppingCategories;
+exports.allAuctionCategories = allAuctionCategories;
+exports.allGameCategories = allGameCategories;
+exports.getEventType = getEventType;
 exports.getAllQuestions = getAllQuestions;
 exports.cardsSorter = cardsSorter;
 const common_1 = require("./common");
@@ -49,8 +51,48 @@ function getNextQuestionState(state) {
             return QuestionState.Closed;
     }
 }
+var StreamEventType;
+(function (StreamEventType) {
+    StreamEventType["Game"] = "Game";
+    StreamEventType["Auction"] = "Auction";
+    StreamEventType["Shopping"] = "Shopping";
+})(StreamEventType || (exports.StreamEventType = StreamEventType = {}));
 /*
-https://app.clickup.com/t/86c5ttayg
+Games:
+All
+Esports
+Fitness and Health
+IRL
+Just Chatting
+Movies/TV
+Music
+Politics
+Science
+Sports
+Stocks/Crypto
+Talk Shows/Podcasts
+Video Games
+
+Auctions:
+All
+Apparel
+Antiques & Collectibles
+Arts & Entertainment
+Autos & Vehicles
+Beauty & Fitness
+Business & Industrial
+Consumer Electronics
+Food & Drink
+Games
+Health
+Home & Garden
+People & Society
+Pets & Animals
+Sports
+Toys & Hobbies
+
+Shopping
+All
 Apparel
 Antiques & Collectibles
 Arts & Entertainment
@@ -67,24 +109,69 @@ Pets & Animals
 Sports
 Toys & Hobbies
 */
-var StreamEventCategory;
-(function (StreamEventCategory) {
-    StreamEventCategory["All"] = "All";
-    StreamEventCategory["AntiquesCollectibles"] = "Antiques & Collectibles";
-    StreamEventCategory["ArtsEntertainment"] = "Arts & Entertainment";
-    StreamEventCategory["AutosVehicles"] = "Autos & Vehicles";
-    StreamEventCategory["BeautyFitness"] = "Beauty & Fitness";
-    StreamEventCategory["BusinessIndustrial"] = "Business & Industrial";
-    StreamEventCategory["ConsumerElectronics"] = "Consumer Electronics";
-    StreamEventCategory["FoodDrink"] = "Food & Drink";
-    StreamEventCategory["Games"] = "Games";
-    StreamEventCategory["Health"] = "Health";
-    StreamEventCategory["HomeGarden"] = "Home & Garden";
-    StreamEventCategory["PeopleSociety"] = "People & Society";
-    StreamEventCategory["PetsAnimals"] = "Pets & Animals";
-    StreamEventCategory["Sports"] = "Sports";
-    StreamEventCategory["ToysHobbies"] = "Toys & Hobbies";
-})(StreamEventCategory || (exports.StreamEventCategory = StreamEventCategory = {}));
+var StreamEventGameCategory;
+(function (StreamEventGameCategory) {
+    StreamEventGameCategory["All"] = "All Games";
+    StreamEventGameCategory["Esports"] = "Esports";
+    StreamEventGameCategory["FitnessHealth"] = "Fitness and Health";
+    StreamEventGameCategory["IRL"] = "IRL";
+    StreamEventGameCategory["JustChatting"] = "Just Chatting";
+    StreamEventGameCategory["MoviesTV"] = "Movies/TV";
+    StreamEventGameCategory["Music"] = "Music";
+    StreamEventGameCategory["Politics"] = "Politics";
+    StreamEventGameCategory["Science"] = "Science";
+    StreamEventGameCategory["Sports"] = "Sports";
+    StreamEventGameCategory["StocksCrypto"] = "Stocks/Crypto";
+    StreamEventGameCategory["TalkShowsPodcasts"] = "Talk Shows/Podcasts";
+    StreamEventGameCategory["VideoGames"] = "Video Games";
+})(StreamEventGameCategory || (exports.StreamEventGameCategory = StreamEventGameCategory = {}));
+var StreamEventAuctionCategory;
+(function (StreamEventAuctionCategory) {
+    StreamEventAuctionCategory["All"] = "All Auctions";
+    StreamEventAuctionCategory["Apparel"] = "Apparel";
+    StreamEventAuctionCategory["AntiquesCollectibles"] = "Antiques & Collectibles";
+    StreamEventAuctionCategory["ArtsEntertainment"] = "Arts & Entertainment";
+    StreamEventAuctionCategory["AutosVehicles"] = "Autos & Vehicles";
+    StreamEventAuctionCategory["BeautyFitness"] = "Beauty & Fitness";
+    StreamEventAuctionCategory["BusinessIndustrial"] = "Business & Industrial";
+    StreamEventAuctionCategory["ConsumerElectronics"] = "Consumer Electronics";
+    StreamEventAuctionCategory["FoodDrink"] = "Food & Drink";
+    StreamEventAuctionCategory["Games"] = "Games";
+    StreamEventAuctionCategory["Health"] = "Health";
+    StreamEventAuctionCategory["HomeGarden"] = "Home & Garden";
+    StreamEventAuctionCategory["PeopleSociety"] = "People & Society";
+    StreamEventAuctionCategory["PetsAnimals"] = "Pets & Animals";
+    StreamEventAuctionCategory["Sports"] = "Sports";
+    StreamEventAuctionCategory["ToysHobbies"] = "Toys & Hobbies";
+})(StreamEventAuctionCategory || (exports.StreamEventAuctionCategory = StreamEventAuctionCategory = {}));
+var StreamEventShoppingCategory;
+(function (StreamEventShoppingCategory) {
+    StreamEventShoppingCategory["All"] = "All Shopping";
+    StreamEventShoppingCategory["Apparel"] = "Apparel";
+    StreamEventShoppingCategory["AntiquesCollectibles"] = "Antiques & Collectibles";
+    StreamEventShoppingCategory["ArtsEntertainment"] = "Arts & Entertainment";
+    StreamEventShoppingCategory["AutosVehicles"] = "Autos & Vehicles";
+    StreamEventShoppingCategory["BeautyFitness"] = "Beauty & Fitness";
+    StreamEventShoppingCategory["BusinessIndustrial"] = "Business & Industrial";
+    StreamEventShoppingCategory["ConsumerElectronics"] = "Consumer Electronics";
+    StreamEventShoppingCategory["FoodDrink"] = "Food & Drink";
+    StreamEventShoppingCategory["Games"] = "Games";
+    StreamEventShoppingCategory["Health"] = "Health";
+    StreamEventShoppingCategory["HomeGarden"] = "Home & Garden";
+    StreamEventShoppingCategory["PeopleSociety"] = "People & Society";
+    StreamEventShoppingCategory["PetsAnimals"] = "Pets & Animals";
+    StreamEventShoppingCategory["Sports"] = "Sports";
+    StreamEventShoppingCategory["ToysHobbies"] = "Toys & Hobbies";
+})(StreamEventShoppingCategory || (exports.StreamEventShoppingCategory = StreamEventShoppingCategory = {}));
+function allShoppingCategories() {
+    return Object.entries(StreamEventShoppingCategory);
+}
+function allAuctionCategories() {
+    return Object.entries(StreamEventAuctionCategory);
+}
+function allGameCategories() {
+    return Object.entries(StreamEventGameCategory);
+}
 var StreamEventObjectType;
 (function (StreamEventObjectType) {
     StreamEventObjectType["Question"] = "question";
@@ -95,18 +182,7 @@ var StreamEventObjectType;
     StreamEventObjectType["CustomContent"] = "customContent";
     StreamEventObjectType["AuctionV2"] = "auctionV2";
 })(StreamEventObjectType || (exports.StreamEventObjectType = StreamEventObjectType = {}));
-function* allCategories() {
-    for (const [k, v] of Object.entries(StreamEventCategory)) {
-        yield [k, v];
-    }
-}
-var StreamEventType;
-(function (StreamEventType) {
-    StreamEventType["Game"] = "Game";
-    StreamEventType["Auction"] = "Auction";
-    StreamEventType["Shopping"] = "Shopping";
-})(StreamEventType || (exports.StreamEventType = StreamEventType = {}));
-function getStreamType(event) {
+function getEventType(event) {
     return event.eventType || event.category;
 }
 function getAllQuestions(event) {
