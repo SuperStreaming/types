@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.StreamEventObjectType = exports.StreamEventShoppingCategory = exports.StreamEventAuctionCategory = exports.StreamEventGameCategory = exports.StreamEventType = exports.QuestionState = exports.SegmentState = exports.EventState = exports.NONE_PLAYER = void 0;
+exports.StreamEventObjectType = exports.StreamEventGameCategories = exports.StreamEventShoppingCategories = exports.StreamEventAuctionCategories = exports.StreamEventType = exports.QuestionState = exports.SegmentState = exports.EventState = exports.NONE_PLAYER = void 0;
 exports.getNextQuestionState = getNextQuestionState;
-exports.allShoppingCategories = allShoppingCategories;
-exports.allAuctionCategories = allAuctionCategories;
-exports.allGameCategories = allGameCategories;
 exports.getEventType = getEventType;
+exports.isGameEvent = isGameEvent;
+exports.isAuctionEvent = isAuctionEvent;
+exports.isShoppingEvent = isShoppingEvent;
 exports.getAllQuestions = getAllQuestions;
 exports.cardsSorter = cardsSorter;
 const common_1 = require("./common");
@@ -109,69 +109,57 @@ Pets & Animals
 Sports
 Toys & Hobbies
 */
-var StreamEventGameCategory;
-(function (StreamEventGameCategory) {
-    StreamEventGameCategory["All"] = "All Games";
-    StreamEventGameCategory["Esports"] = "Esports";
-    StreamEventGameCategory["FitnessHealth"] = "Fitness and Health";
-    StreamEventGameCategory["IRL"] = "IRL";
-    StreamEventGameCategory["JustChatting"] = "Just Chatting";
-    StreamEventGameCategory["MoviesTV"] = "Movies/TV";
-    StreamEventGameCategory["Music"] = "Music";
-    StreamEventGameCategory["Politics"] = "Politics";
-    StreamEventGameCategory["Science"] = "Science";
-    StreamEventGameCategory["Sports"] = "Sports";
-    StreamEventGameCategory["StocksCrypto"] = "Stocks/Crypto";
-    StreamEventGameCategory["TalkShowsPodcasts"] = "Talk Shows/Podcasts";
-    StreamEventGameCategory["VideoGames"] = "Video Games";
-})(StreamEventGameCategory || (exports.StreamEventGameCategory = StreamEventGameCategory = {}));
-var StreamEventAuctionCategory;
-(function (StreamEventAuctionCategory) {
-    StreamEventAuctionCategory["All"] = "All Auctions";
-    StreamEventAuctionCategory["Apparel"] = "Apparel";
-    StreamEventAuctionCategory["AntiquesCollectibles"] = "Antiques & Collectibles";
-    StreamEventAuctionCategory["ArtsEntertainment"] = "Arts & Entertainment";
-    StreamEventAuctionCategory["AutosVehicles"] = "Autos & Vehicles";
-    StreamEventAuctionCategory["BeautyFitness"] = "Beauty & Fitness";
-    StreamEventAuctionCategory["BusinessIndustrial"] = "Business & Industrial";
-    StreamEventAuctionCategory["ConsumerElectronics"] = "Consumer Electronics";
-    StreamEventAuctionCategory["FoodDrink"] = "Food & Drink";
-    StreamEventAuctionCategory["Games"] = "Games";
-    StreamEventAuctionCategory["Health"] = "Health";
-    StreamEventAuctionCategory["HomeGarden"] = "Home & Garden";
-    StreamEventAuctionCategory["PeopleSociety"] = "People & Society";
-    StreamEventAuctionCategory["PetsAnimals"] = "Pets & Animals";
-    StreamEventAuctionCategory["Sports"] = "Sports";
-    StreamEventAuctionCategory["ToysHobbies"] = "Toys & Hobbies";
-})(StreamEventAuctionCategory || (exports.StreamEventAuctionCategory = StreamEventAuctionCategory = {}));
-var StreamEventShoppingCategory;
-(function (StreamEventShoppingCategory) {
-    StreamEventShoppingCategory["All"] = "All Shopping";
-    StreamEventShoppingCategory["Apparel"] = "Apparel";
-    StreamEventShoppingCategory["AntiquesCollectibles"] = "Antiques & Collectibles";
-    StreamEventShoppingCategory["ArtsEntertainment"] = "Arts & Entertainment";
-    StreamEventShoppingCategory["AutosVehicles"] = "Autos & Vehicles";
-    StreamEventShoppingCategory["BeautyFitness"] = "Beauty & Fitness";
-    StreamEventShoppingCategory["BusinessIndustrial"] = "Business & Industrial";
-    StreamEventShoppingCategory["ConsumerElectronics"] = "Consumer Electronics";
-    StreamEventShoppingCategory["FoodDrink"] = "Food & Drink";
-    StreamEventShoppingCategory["Games"] = "Games";
-    StreamEventShoppingCategory["Health"] = "Health";
-    StreamEventShoppingCategory["HomeGarden"] = "Home & Garden";
-    StreamEventShoppingCategory["PeopleSociety"] = "People & Society";
-    StreamEventShoppingCategory["PetsAnimals"] = "Pets & Animals";
-    StreamEventShoppingCategory["Sports"] = "Sports";
-    StreamEventShoppingCategory["ToysHobbies"] = "Toys & Hobbies";
-})(StreamEventShoppingCategory || (exports.StreamEventShoppingCategory = StreamEventShoppingCategory = {}));
-function allShoppingCategories() {
-    return Object.entries(StreamEventShoppingCategory);
-}
-function allAuctionCategories() {
-    return Object.entries(StreamEventAuctionCategory);
-}
-function allGameCategories() {
-    return Object.entries(StreamEventGameCategory);
-}
+exports.StreamEventAuctionCategories = [
+    "All",
+    "Apparel",
+    "Antiques & Collectibles",
+    "Arts & Entertainment",
+    "Autos & Vehicles",
+    "Beauty & Fitness",
+    "Business & Industrial",
+    "Consumer Electronics",
+    "Food & Drink",
+    "Games",
+    "Health",
+    "Home & Garden",
+    "People & Society",
+    "Pets & Animals",
+    "Sports",
+    "Toys & Hobbies"
+];
+exports.StreamEventShoppingCategories = [
+    "All",
+    "Apparel",
+    "Antiques & Collectibles",
+    "Arts & Entertainment",
+    "Autos & Vehicles",
+    "Beauty & Fitness",
+    "Business & Industrial",
+    "Consumer Electronics",
+    "Food & Drink",
+    "Games",
+    "Health",
+    "Home & Garden",
+    "People & Society",
+    "Pets & Animals",
+    "Sports",
+    "Toys & Hobbies"
+];
+exports.StreamEventGameCategories = [
+    "All",
+    "Esports",
+    "Fitness and Health",
+    "IRL",
+    "Just Chatting",
+    "Movies/TV",
+    "Music",
+    "Politics",
+    "Science",
+    "Sports",
+    "Stocks/Crypto",
+    "Talk Shows/Podcasts",
+    "Video Games"
+];
 var StreamEventObjectType;
 (function (StreamEventObjectType) {
     StreamEventObjectType["Question"] = "question";
@@ -183,7 +171,16 @@ var StreamEventObjectType;
     StreamEventObjectType["AuctionV2"] = "auctionV2";
 })(StreamEventObjectType || (exports.StreamEventObjectType = StreamEventObjectType = {}));
 function getEventType(event) {
-    return event.eventType || event.category;
+    return (event === null || event === void 0 ? void 0 : event.eventType) || (event === null || event === void 0 ? void 0 : event.category);
+}
+function isGameEvent(event) {
+    return getEventType(event) === StreamEventType.Game;
+}
+function isAuctionEvent(event) {
+    return getEventType(event) === StreamEventType.Auction;
+}
+function isShoppingEvent(event) {
+    return getEventType(event) === StreamEventType.Shopping;
 }
 function getAllQuestions(event) {
     return [
