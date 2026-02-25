@@ -200,6 +200,7 @@ type _StreamEvent = BrandInfo & {
   featured: boolean
 
   type: "free" | "paid"
+  limitlessType?: string
 
   subCategory?: string
   state: EventState
@@ -366,12 +367,14 @@ export interface Question extends StreamEventCard {
     coins: number
   }
   options: string[]
+  optionsExtra?: string[]
   answers: string[]
 
   isRapid?: boolean
   state: QuestionState
   activeUntil?: Timestamp
   group?: string
+  limitlessSlug?: string
   // stepMultiplier: number
   // coinMultiplier: number
 }

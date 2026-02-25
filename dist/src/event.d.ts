@@ -60,6 +60,7 @@ type _StreamEvent = BrandInfo & {
     subtitle: string;
     featured: boolean;
     type: "free" | "paid";
+    limitlessType?: string;
     subCategory?: string;
     state: EventState;
     createdAt?: Timestamp;
@@ -182,11 +183,13 @@ export interface Question extends StreamEventCard {
         coins: number;
     };
     options: string[];
+    optionsExtra?: string[];
     answers: string[];
     isRapid?: boolean;
     state: QuestionState;
     activeUntil?: Timestamp;
     group?: string;
+    limitlessSlug?: string;
 }
 export interface ShoppingCard extends StreamEventCard {
     objectType: StreamEventObjectType.Shopping;
