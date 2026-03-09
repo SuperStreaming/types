@@ -121,6 +121,10 @@ type _StreamEvent = BrandInfo & {
     tickets?: boolean;
     short?: string;
     shorts?: string[];
+    streamBrand?: {
+        imgUrl: string;
+        url: string;
+    };
 };
 export type AuctionEvent = _StreamEvent & {
     eventType: StreamEventType.Auction;
