@@ -189,7 +189,6 @@ export type BrandInfo = {
   ytChannel?: string
   ytChannelId?: string
   twitchChannel?: string
-  bannerImageUrl?: string
 }
 
 type _StreamEvent = BrandInfo & {
