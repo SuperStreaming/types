@@ -6,7 +6,15 @@ exports.ensureDate = ensureDate;
 exports.remainingTime = remainingTime;
 exports.remainingTimeString = remainingTimeString;
 function datestampToDate(dateish) {
-    return dateish instanceof Date ? dateish : dateish === null || dateish === void 0 ? void 0 : dateish.toDate();
+    return dateish instanceof Date
+        ? dateish
+        : typeof dateish === "string"
+            ? new Date(dateish)
+            : dateish &&
+                typeof dateish === "object" &&
+                typeof dateish.toDate === "function"
+                ? dateish.toDate()
+                : undefined;
 }
 // deprecated in favor of datestampToDate
 exports.timestampToDate = datestampToDate;

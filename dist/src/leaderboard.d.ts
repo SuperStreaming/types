@@ -37,4 +37,5 @@ export type Leaderboard = {
     numPlayers: number;
     lastUpdated: Timestamp;
     entries: Array<LeaderboardPlayerScore>;
+    brand?: string;
 };

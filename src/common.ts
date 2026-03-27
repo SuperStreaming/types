@@ -2,10 +2,18 @@ import { Timestamp } from "@firebase/firestore/lite"
 
 import { Datestamp } from "./v2/auction"
 
-type Dateish = Date | Timestamp | undefined
+type Dateish = Date | Timestamp | string | undefined | null
 
 export function datestampToDate(dateish: Dateish) {
-  return dateish instanceof Date ? dateish : dateish?.toDate()
+  return dateish instanceof Date
+    ? dateish
+    : typeof dateish === "string"
+      ? new Date(dateish)
+      : dateish &&
+          typeof dateish === "object" &&
+          typeof dateish.toDate === "function"
+        ? dateish.toDate()
+        : undefined
 }
 
 // deprecated in favor of datestampToDate
